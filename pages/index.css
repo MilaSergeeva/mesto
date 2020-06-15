@@ -1,0 +1,19 @@
+@import url(../vendor/normalize.css);
+@import url(../blocks/root/root.css);
+@import url(../blocks/page/page.css);
+@import url(../blocks/header/header.css);
+@import url(../blocks/avatar/avatar.css);
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile-info/profile-info.css);
+@import url(../blocks/add-button/add-button.css);
+@import url(../blocks/places/places.css);
+@import url(../blocks/place/place.css);
+@import url(../blocks/like-btn/like-btn.css);
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/popup/popup.css);
+/* @import url(../blocks/popup/_opened/popup_opened.css); */
+
+
+/* div, img, p, h1, section {
+    border: solid 1px red;
+}  */

@@ -1,0 +1,19 @@
+.popup__occupation {
+    max-width: 358px;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    color: #000000;
+    padding: 30px 0 13px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 0 48px;
+
+}
+
+/* .popup__occupation:active {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+} */

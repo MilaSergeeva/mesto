@@ -1,0 +1,14 @@
+@import url(./__img/place__img.css);
+@import url(./__title/place__title.css);
+@import url(./__container/place__container.css);
+
+
+.place {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
