@@ -26,3 +26,10 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
 }
+
+@media screen and (max-width: 500px) {  
+    .popup {
+        padding: 0 9.6vw;
+        box-sizing: border-box;
+    }
+}

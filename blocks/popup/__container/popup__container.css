@@ -8,3 +8,9 @@
     position: relative;
     box-sizing: border-box;
 }
+
+@media screen and (max-width: 500px) {  
+    .popup-container {
+        padding: 6.8vw 7.2vw 7.4vw;
+    }
+}

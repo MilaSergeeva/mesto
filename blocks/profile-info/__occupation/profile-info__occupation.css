@@ -5,12 +5,14 @@
     color: #FFFFFF;
     margin: 0;
     padding: 0;
+    white-space: pre-wrap;
 }
 
 @media screen and (max-width: 700px) {  
     .profile-info__occupation {
         padding-bottom: 36px;
         text-align: center;
+        max-width: 100%;
         }
 }
 

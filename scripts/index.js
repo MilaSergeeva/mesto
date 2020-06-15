@@ -3,8 +3,6 @@ const popup = document.querySelector('.popup');
 const popupSaveBtn = popup.querySelector('.popup_btn-save');
 const popupCloseBtn = popup.querySelector('.popup__close');
 
-
-// Присваем модификатор для отрадения попап на странице
 const popupToggle = function (event) {
     popup.classList.toggle('popup_opened');
 }
