@@ -3,19 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <meta name="description" content="Проектная работа №4 Яндекс.Практикуме">
-    <meta name="keywords" content="   ">
+    <meta name="keywords" content="russian-travel russia">
     <meta name="author" content="Liudmila Sergeeva">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pages/index.css">
-    <title></title>
+    <title>Россия в фотографиях</title>
   </head>
   <body class="root">
     <div class="page">
+      
       <header class="header">
         <img class="header__logo" src="images/Logo.svg" alt="Логотип">
       </header>
   
       <main class="content">
+
         <section class="profile">
           <div class="profile__flex-centr">
             <img class="avatar" src="images/avatar.jpg" alt="Аватар">
@@ -30,82 +32,68 @@
 
   
         <section class="places">
-            <figure class="place">
-              <img class="place__img" src="images/karachaevk.jpg" alt="Карачаевск">
-              <div class="place__container">
-                <figcaption class="place__title">Карачаевск</figcaption>
-                <button class="like-btn"></button>
-              </div>
-            </figure>
-            <figure class="place">
-              <img class="place__img" src="images/Elbrus.png" alt="Гора_Эльбрус">
-              <div class="place__container">
-                <figcaption class="place__title">Гора Эльбрус</figcaption>
-                <button class="like-btn"></button>
-              </div>
-            </figure>
-            <figure class="place">
-              <img class="place__img" src="images/Dombai.png" alt="Домбай">
-              <div class="place__container">
-                <figcaption class="place__title">Домбай</figcaption>
-                <div class="like-btn">
-                <button class="like-btn"></button>
-            </figure>
-            <figure class="place">
-              <img class="place__img" src="images/Elbrus.png" alt="Гора_Эльбрус">
-              <div class="place__container">
-                <figcaption class="place__title">Гора Эльбрус</figcaption>
-                <button class="like-btn"></button>
-              </div>
-            </figure>
-            <figure class="place">
-              <img class="place__img" src="images/Dombai.png" alt="Домбай">
-              <div class="place__container">
-                <figcaption class="place__title">Домбай</figcaption>
-                <button class="like-btn"></button>
-              </div>
-            </figure>
-            <figure class="place">
-              <img class="place__img" src="images/karachaevk.jpg" alt="Карачаево-Черкесия">
-              <div class="place__container">
-                <figcaption class="place__title">Карачаево-Черкесия</figcaption>
-                <button class="like-btn"></button>
-              </div>
-            </figure>
-
-
-        </section>
-
-
-        <section class="  ">
-          
-        </section>
-
-          
-        <section class="  "> 
-          
-        </section>
-
-        <section class="  ">
-          
+          <figure class="place">
+            <img class="place__img" src="images/karachaevk.jpg" alt="Карачаевск">
+            <figcaption class="place__container">
+              <h3 class="place__title">Карачаевск</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
+          <figure class="place">
+            <img class="place__img" src="images/elbrus.jpg" alt="Гора_Эльбрус">
+            <figcaption class="place__container">
+              <h3 class="place__title">Гора Эльбрус</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
+          <figure class="place">
+            <img class="place__img" src="images/Dombai.png" alt="Домбай">
+            <figcaption class="place__container">
+              <h3 class="place__title">Домбай</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
+          <figure class="place">
+            <img class="place__img" src="images/Kamchatka.jpg" alt="Камчатка">
+            <figcaption class="place__container">
+              <h3 class="place__title">Камчатка</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
+          <figure class="place">
+            <img class="place__img" src="images/Kiji.jpeg" alt="Kiji">
+            <figcaption class="place__container">
+              <h3 class="place__title">Кижи</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
+          <figure class="place">
+            <img class="place__img" src="images/kurshskaya_kosa.jpg" alt="Куршская_коса">
+            <figcaption class="place__container">
+              <h3 class="place__title">Куршская коса</h3>
+              <button class="like-btn"></button>
+            </figcaption>
+          </figure>
         </section>
       </main>
   
       <footer class="footer">
-          <p class="footer__copyright">&copy; 2020. Людмила Сергеева</p>
+        <p class="footer__copyright">&copy; 2020. Людмила Сергеева</p>
       </footer>
     </div>
+
     <section class="popup">
       <div class="popup-container">
-        <img src="./images/Close Icon.svg" alt="крестик" class="popup__close">
+        <img src="./images/Close_Icon.svg" alt="крестик" class="popup__close">
         <div class="popup__content">
           <h3 class="popup__title">Редактировать профиль</h3>
           <input type="text" placeholder="Имя" class="popup__name">
           <input type="text" placeholder="Род деятельности" class="popup__occupation">  
-          <button class="popup_btn-save">Сохранить</button>  
+          <button type="submit" class="popup_btn-save">Сохранить</button>  
         </div>
       </div>
     </section>
+
     <script type="text/javascript" src="./scripts/index.js"></script>
   </body>
 </html>

@@ -6,3 +6,8 @@
 
     
 }
+
+.popup__close:hover {
+    opacity: 0.6;
+    transition: .5s ease-in-out;
+}

@@ -1,8 +1,21 @@
 .profile-info__occupation{
-    display: inline-block;
+    display: block;
     font-size: 18px;
     line-height: 1.2;
     color: #FFFFFF;
     margin: 0;
     padding: 0;
+}
+
+@media screen and (max-width: 700px) {  
+    .profile-info__occupation {
+        padding-bottom: 36px;
+        text-align: center;
+        }
+}
+
+@media screen and (max-width: 420px) {  
+    .profile-info__occupation {
+        font-size: 14px;
+        }
 }

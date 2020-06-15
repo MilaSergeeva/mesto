@@ -24,22 +24,17 @@ const userName = document.querySelector('.profile-info__name');
 const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('.popup__name');
 const occupationInput = document.querySelector('.popup__occupation');
+nameInput.value = userName.textContent;
+occupationInput.value = userOccupation.textContent
 
 let saveElement = popup.querySelector('.popup_btn-save');
 function formSubmitHandler (event) {
     event.preventDefault();
-    // nameInput.value = ' ';
-    // occupationInput.vslue = ' ';
     userName.textContent = nameInput.value;
-    userOccupation.textContent = occupationInput.value;
-    
+    userOccupation.textContent = occupationInput.value;   
 }
 
-saveElement.addEventListener('submit', formSubmitHandler);
+saveElement.addEventListener('click',formSubmitHandler);
 
-// console.log ({
-//     popupOpenBtn,
-//     popup,
-//     popupSaveBtn,
-//     popupCloseBtn
-// });
+
+ 

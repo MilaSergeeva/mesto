@@ -7,3 +7,15 @@
     margin: 0;
     padding: 0 17px 5px 0;
 }
+
+@media screen and (max-width: 700px) {  
+    .profile-info__name {
+        padding: 20px 0 14px 0;
+        }
+}
+
+@media screen and (max-width: 420px) {  
+    .profile-info__name {
+        font-size: 27px;
+        }
+}

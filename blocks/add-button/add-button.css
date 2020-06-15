@@ -9,11 +9,16 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    box-shadow: none;
-   
+    box-shadow: none; 
 }
 
 .add-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    transform: 2s;
+    opacity: 0.6;
+    transition: .5s ease-in-out;
+}
+
+@media screen and (max-width: 700px) {  
+    .add-button {
+        width: 100%;
+        }
 }
