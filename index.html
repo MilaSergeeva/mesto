@@ -20,7 +20,7 @@
 
         <section class="profile">
           <div class="profile__flex-centr">
-            <img class="avatar" src="images/avatar.jpg" alt="Аватар">
+            <img class="profile__avatar" src="images/avatar.jpg" alt="Аватар">
             <div class="profile-info">
               <h1 class="profile-info__name">Жак-Ив Кусто</h1>
               <button class="profile-info__edit-button profile-info__popup-open"></button>
@@ -86,10 +86,12 @@
       <div class="popup-container">
         <img src="./images/Close_Icon.svg" alt="крестик" class="popup__close">
         <div class="popup__content">
-          <h3 class="popup__title">Редактировать профиль</h3>
-          <input type="text" placeholder="Имя" class="popup__name">
-          <input type="text" placeholder="Род деятельности" class="popup__occupation">  
-          <button type="submit" class="popup_btn-save">Сохранить</button>  
+          <form action="/submit" method="POST">
+            <h3 class="popup__title">Редактировать профиль</h3>
+            <input type="text" placeholder="Имя" class="popup__name">
+            <input type="text" placeholder="Род деятельности" class="popup__occupation">  
+            <button type="submit" class="popup_btn-save">Сохранить</button> 
+          </form>
         </div>
       </div>
     </section>
