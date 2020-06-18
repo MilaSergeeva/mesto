@@ -1,4 +1,4 @@
-.popup__name {
+.popup__user-info {
     max-width: 358px;
     width: 100%;
     font-size: 14px;
@@ -9,4 +9,10 @@
     border: none;
     border-bottom: 1px solid  rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
+}
+
+@media screen and (max-width: 700px) {  
+    .popup__user-info {
+        padding-top: 4.3vw;
+    }
 }

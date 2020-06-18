@@ -1,10 +1,10 @@
-.add-button {
+.profile__add-button {
     height: 50px;
     width: 150px;
     border: 1px solid #FFFFFF;
     background-color: #000000;
     box-sizing: border-box;
-    background-image: url(../../images/add_btn.svg);
+    background-image: url(../../../images/add_btn.svg);
     border-radius: 2px;
     background-repeat: no-repeat;
     background-position: center;
@@ -12,13 +12,13 @@
     box-shadow: none; 
 }
 
-.add-button:hover {
+.profile__add-button:hover {
     opacity: 0.6;
     transition: .5s ease-in-out;
 }
 
 @media screen and (max-width: 700px) {  
-    .add-button {
+    .profile__add-button {
         width: 100%;
-        }
+    }
 }

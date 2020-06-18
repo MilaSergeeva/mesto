@@ -4,13 +4,13 @@
 @import url(./__occupation/profile-info__occupation.css);
 
 .profile-info{
-    display: inline-block;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr;
+    align-items: end;
     margin: auto 0 auto 30px;
     max-width: 336px;
-    height: 100%;
-    vertical-align: center;
-    white-space: nowrap;
-    
+    height: 100%;  
 }
 
 

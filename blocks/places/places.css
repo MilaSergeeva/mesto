@@ -5,7 +5,7 @@
    width: 100%;
    grid-column-gap: 18px;
    grid-row-gap: 21px;
-   margin: 11px auto 0 auto;
+   margin: 0 auto 0 auto;
    justify-content: center;
    box-sizing: border-box;
 }
