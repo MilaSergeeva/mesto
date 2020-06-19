@@ -8,13 +8,16 @@ const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
 const saveElement = popup.querySelector('.popup__form');
 
-
+// Открыть popup, заполнить значениями, закрыть popup
 const popupToggle = function (_event) {
+    if (!popup.classList.contains('popup_opened')) {
+        nameInput.value = userName.textContent;
+        occupationInput.value = userOccupation.textContent;
+    }
     popup.classList.toggle('popup_opened');
-    nameInput.value = userName.textContent;
-    occupationInput.value = userOccupation.textContent;
 }
 
+// закрыть popup при нажатии на зону вне popup
 const popupOverlayClose = function (event) {
     if (event.target !== event.currentTarget) {
         return;
@@ -23,7 +26,7 @@ const popupOverlayClose = function (event) {
     popupToggle();
 }
 
-
+//Придать новые значения в profile
 function formSubmitHandler(event) {
     event.preventDefault();
 
