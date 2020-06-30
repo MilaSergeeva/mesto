@@ -30,51 +30,10 @@
           <button type="button" aria-label="Добавить" class="profile__add-button"></button>
         </section>
 
-  
         <section class="places">
-          <figure class="place">
-            <img class="place__img" src="images/karachaevk.jpg" alt="Карачаевск">
-            <figcaption class="place__container">
-              <h3 class="place__title">Карачаевск</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
-          <figure class="place">
-            <img class="place__img" src="images/elbrus.jpg" alt="Гора_Эльбрус">
-            <figcaption class="place__container">
-              <h3 class="place__title">Гора Эльбрус</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
-          <figure class="place">
-            <img class="place__img" src="images/dombai.png" alt="Домбай">
-            <figcaption class="place__container">
-              <h3 class="place__title">Домбай</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
-          <figure class="place">
-            <img class="place__img" src="images/kamchatka.jpg" alt="Камчатка">
-            <figcaption class="place__container">
-              <h3 class="place__title">Камчатка</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
-          <figure class="place">
-            <img class="place__img" src="images/kiji.jpeg" alt="Kiji">
-            <figcaption class="place__container">
-              <h3 class="place__title">Кижи</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
-          <figure class="place">
-            <img class="place__img" src="images/kurshskaya_kosa.jpg" alt="Куршская_коса">
-            <figcaption class="place__container">
-              <h3 class="place__title">Куршская коса</h3>
-              <button type="button" aria-label="Лайк" class="place__like-btn"></button>
-            </figcaption>
-          </figure>
+         
         </section>
+
       </main>
   
       <footer class="footer">
@@ -82,19 +41,56 @@
       </footer>
     </div>
 
-    <section class="popup">
-      <div class="popup__container">
-        <button type="button" aria-label="Закрыть" class="popup__close"></button>
-        <div class="popup__content">
-          <form action="/submit" method="POST" name="user-info" class="popup__form">
-            <h3 class="popup__title">Редактировать профиль</h3>
-            <input type="text" name="user-name" placeholder="Имя" class="popup__user-info" required>
-            <input type="text" name="user-occupation" placeholder="Род деятельности" class="popup__user-info" required>  
-            <button type="submit" class="popup__btn-save">Сохранить</button> 
-          </form>
+    <section class="popup-forms">
+      
+      <div class="popup popup_edit">
+        <div class="popup__container">
+          <button type="button" aria-label="Закрыть" class="popup__close"></button>
+          <div class="popup__content">
+            <form action="/submit" method="POST" name="user-info" class="popup__form">
+              <h3 class="popup__title">Редактировать профиль</h3>
+              <input type="text" name="user-name" placeholder="Имя" class="popup__info" required>
+              <input type="text" name="user-occupation" placeholder="Род деятельности" class="popup__info" required>  
+              <button type="submit" class="popup__btn-save">Сохранить</button> 
+            </form>
+          </div>
         </div>
       </div>
+
+      <div class="popup popup_add">
+        <div class="popup__container">
+          <button type="button" aria-label="Закрыть" class="popup__close"></button>
+          <div class="popup__content">
+            <form action="/submit" method="POST" name="place-info" class="popup__form">
+              <h3 class="popup__title">Новое место</h3>
+              <input type="text" name="place-name" placeholder="Название" class="popup__info" required>
+              <input type="text" name="place-link" placeholder="Ссылка на картинку" class="popup__info" required>  
+              <button type="submit" class="popup__btn-save">Создать</button> 
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-pic">
+        <figure class="popup-pic_place">
+          <img class="popup-pic__img" src="#" alt="#">
+          <figcaption>
+            <h3 class="place__title"></h3>
+          </figcaption>
+        </figure>
+      </div>
     </section>
+
+    <template class='places-template'>
+      <figure class="place">
+        <img class="place__img" src="#" alt="#">
+        <figcaption class="place__container">
+          <h3 class="place__title"></h3>
+          <button type="button" aria-label="Лайк" class="place__like-btn"></button>
+        </figcaption>
+        <button type="button" aria-label="Корзина" class="place__bin-btn"></button>
+      </figure>
+    </template>
     
     <script type="text/javascript" src="./scripts/index.js"></script>
   </body>

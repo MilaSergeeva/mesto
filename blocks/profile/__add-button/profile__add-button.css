@@ -11,6 +11,7 @@
     cursor: pointer;
     box-shadow: none; 
     margin-bottom: 23px;
+    outline: none;
 }
 
 .profile__add-button:hover {

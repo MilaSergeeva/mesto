@@ -12,6 +12,7 @@
     cursor: pointer;
     margin-bottom: 12px;
     padding: 0;
+    outline: none;
 }
 
 .profile-info__edit-button:hover {
