@@ -1,52 +1,24 @@
-const popupOpenBtn = document.querySelector('.profile-info__edit-button');
-const popups = document.querySelectorAll('.popup');
+const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
+const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
+
+// edit user popup
 const popupEdit = document.querySelector('.popup_edit');
-const popupAdd = document.querySelector('.popup_add');
-const popupSaveBtns = document.querySelectorAll('.popup__btn-save');
-const popupCloseBtns = document.querySelectorAll('.popup__close');
 const userName = document.querySelector('.profile-info__name');
 const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
-const saveElements = document.querySelectorAll('.popup__form');
+const editProfileForm = popupEdit.querySelector('.popup__form');
+const popupEditCloseBtn = popupEdit.querySelectorAll('.popup__close');
 
-console.log(popupCloseBtns, popupCloseBtns.length);
-// Открыть popup, заполнить значениями, закрыть popup
-const popupToggle = function (_event) {
-    if (!popupEdit.classList.contains('popup_opened')) {
-        nameInput.value = userName.textContent;
-        occupationInput.value = userOccupation.textContent;
-    }
-    popupEdit.classList.toggle('popup_opened');
-}
+// add place popup
+const popupAdd = document.querySelector('.popup_add');
+const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
+const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
+const addPlaceForm = popupAdd.querySelector('.popup__form');
+const popupAddCloseBtn = popupAdd.querySelectorAll('.popup__close');
 
-// закрыть popup при нажатии на зону вне popup
-const popupOverlayClose = function (event) {
-    if (event.target !== event.currentTarget) {
-        return;
-    }
-    
-    popupToggle();
-}
-
-//Придать новые значения в profile
-function formSubmitHandler(event) {
-    event.preventDefault();
-
-    userName.textContent = nameInput.value;
-    userOccupation.textContent = occupationInput.value;
-
-    popupToggle();
-}
-
-popupOpenBtn.addEventListener('click', popupToggle);
-popupCloseBtns[0].addEventListener('click', popupToggle);
-popups[0].addEventListener('click', popupOverlayClose);
-
-saveElements[0].addEventListener('submit', formSubmitHandler);
-saveElements[1].addEventListener('submit', placeSubmitHandler);
-
-
+// Картиночки
+const places =  document.querySelector('.places');
 
 const initialCards = [
     {
@@ -75,23 +47,51 @@ const initialCards = [
     }
 ];
 
+// Открыть popup, заполнить значениями, закрыть popup
+const popupToggle = function (_event) {
+    if (!popupEdit.classList.contains('popup_opened')) {
+        nameInput.value = userName.textContent;
+        occupationInput.value = userOccupation.textContent;
+    }
+    popupEdit.classList.toggle('popup_opened');
+}
 
-const places =  document.querySelector('.places');
-// const placesTemplateElement = document.querySelector('.places-template');
-// console.log(placesTemplateElement);
+// закрыть popup при нажатии на зону вне popup
+const popupOverlayClose = function (event) {
+    if (event.target !== event.currentTarget) {
+        return;
+    }
+    
+    popupToggle();
+}
 
-function addPlace(name, link) {
-    // const place = placesTemplateElement.сontent.cloneNode(true); //клонируем карточку из tamplate
+//Придать новые значения в profile
+function editProfileSubmitHandler(event) {
+    event.preventDefault();
+
+    userName.textContent = nameInput.value;
+    userOccupation.textContent = occupationInput.value;
+
+    popupToggle();
+}
+
+function renderPlace(name, link) {
     const placesTemplateElement = document.querySelector('.places-template').content;
     const place = placesTemplateElement.cloneNode(true);
 
     place.querySelector('.place__title').textContent = name; //заполняем элемент карточки по индексу массива
     place.querySelector('.place__img').src = link;
     place.querySelector('.place__img').alt = name;
-    
+
     place.querySelector('.place__bin-btn').addEventListener('click', deliteCard);
 
-    places.prepend(place);
+    return place;
+};
+
+function addPlace(name, link) {
+    const renderedPlace = renderPlace(name, link);    
+
+    places.prepend(renderedPlace);
 };
 
 initialCards.reverse().forEach(element => {
@@ -100,13 +100,10 @@ initialCards.reverse().forEach(element => {
 
 function deliteCard(event) {
     const placeDelite = event.target.closest('.place');
+    // remove from array а может быть и нет
     
     placeDelite.remove();
 }
-
-let placeNameInput = popups[1].querySelector('input[name="place-name"]');
-let placeLinkInput = popups[1].querySelector('input[name="place-link"]');
-const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
 
 //функция закрытия открытия popup add 
 const popupAddToggle = function (_event) {
@@ -115,11 +112,7 @@ const popupAddToggle = function (_event) {
     popupAdd.classList.toggle('popup_opened');
 }
 
-popupAddOpenBtn.addEventListener('click', popupAddToggle);
-popupCloseBtns[1].addEventListener('click', popupAddToggle);
-
-
-function placeSubmitHandler(event) {
+function addPlaceSubmitHandler(event) {
     event.preventDefault();
     
     const arrElement = { 
@@ -141,4 +134,19 @@ const popupAddOverlayClose = function (event) {
     popupAddToggle();
 }
 
-popups[1].addEventListener('click', popupAddOverlayClose);
+// bind toggle to popups
+popupOpenBtn.addEventListener('click', popupToggle);
+popupAddOpenBtn.addEventListener('click', popupAddToggle);
+popupEditCloseBtn.addEventListener('click', popupToggle);
+popupAddCloseBtn.addEventListener('click', popupAddToggle);
+
+// close on overlay click
+popupEdit.addEventListener('click', popupOverlayClose);
+popupAdd.addEventListener('click', popupAddOverlayClose);
+
+// submit events
+editProfileForm.addEventListener('submit', editProfileSubmitHandler);
+addPlaceForm.addEventListener('submit', addPlaceSubmitHandler);
+
+// const placesTemplateElement = document.querySelector('.places-template');
+// console.log(placesTemplateElement);
