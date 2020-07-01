@@ -1,0 +1,6 @@
+.popup-pic_opened {
+    /* display: flex; */
+    opacity: 1;
+    visibility: visible;
+    
+}

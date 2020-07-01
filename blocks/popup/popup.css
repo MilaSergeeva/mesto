@@ -11,7 +11,7 @@
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Inter', Arial, sans-serif;
@@ -21,6 +21,9 @@
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s linear, visibility .5s linear;
 }
 
 @media screen and (max-width: 500px) {  

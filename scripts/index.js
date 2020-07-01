@@ -1,6 +1,7 @@
 const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
 const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
 
+
 // edit user popup
 const popupEdit = document.querySelector('.popup_edit');
 const userName = document.querySelector('.profile-info__name');
@@ -8,17 +9,22 @@ const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
 const editProfileForm = popupEdit.querySelector('.popup__form');
-const popupEditCloseBtn = popupEdit.querySelectorAll('.popup__close');
+const popupEditCloseBtn = popupEdit.querySelector('.popup__close');
 
 // add place popup
 const popupAdd = document.querySelector('.popup_add');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
 const addPlaceForm = popupAdd.querySelector('.popup__form');
-const popupAddCloseBtn = popupAdd.querySelectorAll('.popup__close');
+const popupAddCloseBtn = popupAdd.querySelector('.popup__close');
 
 // Картиночки
 const places =  document.querySelector('.places');
+
+const popupPicView = document.querySelector('.popup-pic');
+const popupPicImg = document.querySelector('.popup-pic__img');
+const popupPicTitle = document.querySelector('.popup-pic__title');
+const popupPicViewCloseBtn = popupPicView.querySelector('.popup__close');
 
 const initialCards = [
     {
@@ -53,6 +59,7 @@ const popupToggle = function (_event) {
         nameInput.value = userName.textContent;
         occupationInput.value = userOccupation.textContent;
     }
+
     popupEdit.classList.toggle('popup_opened');
 }
 
@@ -80,10 +87,16 @@ function renderPlace(name, link) {
     const place = placesTemplateElement.cloneNode(true);
 
     place.querySelector('.place__title').textContent = name; //заполняем элемент карточки по индексу массива
-    place.querySelector('.place__img').src = link;
-    place.querySelector('.place__img').alt = name;
-
+    
+    const img = place.querySelector('.place__img');
+    
+    img.src = link;
+    img.alt = name;
+    //Просмотр картинки из галереи
+    img.addEventListener('click', popupPlacePicToggle);
+    //Бинды иментов для элементов place
     place.querySelector('.place__bin-btn').addEventListener('click', deliteCard);
+    place.querySelector('.place__like-btn').addEventListener('click', likeBtnToggle);
 
     return place;
 };
@@ -107,10 +120,18 @@ function deliteCard(event) {
 
 //функция закрытия открытия popup add 
 const popupAddToggle = function (_event) {
-    if (!popupAdd.classList.contains('popup_opened')) {  
+    if (!popupAdd.classList.contains('popup_opened')) {
+        placeNameInput.value = "";
+        placeLinkInput.value = "";
     }
+
     popupAdd.classList.toggle('popup_opened');
 }
+
+//функция ставим лайк
+function likeBtnToggle(event) {
+    event.target.classList.toggle('place__like-btn_on');
+};
 
 function addPlaceSubmitHandler(event) {
     event.preventDefault();
@@ -125,7 +146,7 @@ function addPlaceSubmitHandler(event) {
 
     popupAddToggle();
 }
-
+//закрытие popup Add через overlay
 const popupAddOverlayClose = function (event) {
     if (event.target !== event.currentTarget) {
         return;
@@ -134,8 +155,31 @@ const popupAddOverlayClose = function (event) {
     popupAddToggle();
 }
 
+//функция открытия  закрытия popup с просмотром картинки
+function popupPlacePicToggle(_event) {
+    if (!popupPicView.classList.contains('popup-pic_opened')) {  
+        popupPicImg.src = event.target.src;
+        popupPicTitle.textContent = event.target.alt;
+    }
+
+    popupPicView.classList.toggle('popup-pic_opened');
+};
+
+//закрытие popup PicView через overlay
+const popupPicViewOverlayClose = function (event) {
+    if (event.target !== event.currentTarget) {
+        return;
+    }
+
+    popupPlacePicToggle();
+};
+
+//закрытие просмотра картинки
+popupPicViewCloseBtn.addEventListener('click', popupPlacePicToggle);
+popupPicView.addEventListener('click', popupPicViewOverlayClose)
+
 // bind toggle to popups
-popupOpenBtn.addEventListener('click', popupToggle);
+popupEditOpenBtn.addEventListener('click', popupToggle);
 popupAddOpenBtn.addEventListener('click', popupAddToggle);
 popupEditCloseBtn.addEventListener('click', popupToggle);
 popupAddCloseBtn.addEventListener('click', popupAddToggle);
@@ -147,6 +191,3 @@ popupAdd.addEventListener('click', popupAddOverlayClose);
 // submit events
 editProfileForm.addEventListener('submit', editProfileSubmitHandler);
 addPlaceForm.addEventListener('submit', addPlaceSubmitHandler);
-
-// const placesTemplateElement = document.querySelector('.places-template');
-// console.log(placesTemplateElement);
