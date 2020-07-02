@@ -12,6 +12,7 @@
     box-shadow: none; 
     margin-bottom: 23px;
     outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .profile__add-button:hover {

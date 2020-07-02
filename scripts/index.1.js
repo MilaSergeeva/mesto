@@ -53,42 +53,35 @@ const initialCards = [
     }
 ];
 
-
-const togglePopupClass = function (name, value) {
-    name.classList.toggle(value);
-};
-
-//Открыть Edit popup, заполнить значениями
-function openEditPopup(_event) {
+// Открыть popup, заполнить значениями, закрыть popup
+const togglePopup = function (_event) {
     if (!popupEdit.classList.contains('popup_opened')) {
         nameInput.value = userName.textContent;
         occupationInput.value = userOccupation.textContent;
     }
 
-    togglePopupClass(popupEdit, 'popup_opened');
+    popupEdit.classList.toggle('popup_opened');
 };
 
 // закрыть popup при нажатии на зону вне popup
-const closeEditPopupOverlay = function (event) {
+const closePopupOverlay = function (event) {
     if (event.target !== event.currentTarget) {
         return;
     }
     
-    togglePopupClass(popupEdit, 'popup_opened');
+    togglePopup();
 };
 
 //Придать новые значения в profile
-function handleEditProfileSubmit(event) {
+function editProfileSubmitHandler(event) {
     event.preventDefault();
 
     userName.textContent = nameInput.value;
     userOccupation.textContent = occupationInput.value;
 
-    togglePopupClass(popupEdit, 'popup_opened');
+    togglePopup();
 };
 
-
-//рендер карточки места
 function renderPlace(name, link) {
     const placesTemplateElement = document.querySelector('.places-template').content;
     const place = placesTemplateElement.cloneNode(true);
@@ -100,28 +93,24 @@ function renderPlace(name, link) {
     img.src = link;
     img.alt = name;
     //Просмотр картинки из галереи
-    img.addEventListener('click', openClosePopupPlacePic);
+    img.addEventListener('click', togglePopupPlacePic);
     //Бинды иментов для элементов place
     place.querySelector('.place__bin-btn').addEventListener('click', deliteCard);
-    place.querySelector('.place__like-btn').addEventListener('click', handleLikeButton);
+    place.querySelector('.place__like-btn').addEventListener('click', toggleLikeBtn);
 
     return place;
 };
 
 function addPlace(name, link) {
     const renderedPlace = renderPlace(name, link);    
-    placeNameInput.value = "";
-    placeLinkInput.value = "";
 
     places.prepend(renderedPlace);
 };
 
 initialCards.reverse().forEach(element => {
     addPlace(element.name, element.link);
-   
 });
 
-//удаление карточки
 function deliteCard(event) {
     const placeDelite = event.target.closest('.place');
     // remove from array а может быть и нет
@@ -129,23 +118,22 @@ function deliteCard(event) {
     placeDelite.remove();
 };
 
-//функция открытия popup add 
-const openPopupAdd = function (_event) {
+//функция закрытия открытия popup add 
+const togglePopupAdd = function (_event) {
     if (!popupAdd.classList.contains('popup_opened')) {
         placeNameInput.value = "";
         placeLinkInput.value = "";
     }
 
-    togglePopupClass(popupAdd, 'popup_opened');
-    // popupAdd.classList.toggle('popup_opened');
+    popupAdd.classList.toggle('popup_opened');
 };
 
 //функция ставим лайк
-function handleLikeButton(event) {
+function toggleLikeBtn(event) {
     event.target.classList.toggle('place__like-btn_on');
 };
 
-function handleAddPlaceSubmit(event) {
+function addPlaceSubmitHandler(event) {
     event.preventDefault();
     
     const arrElement = { 
@@ -156,7 +144,7 @@ function handleAddPlaceSubmit(event) {
     initialCards.unshift(arrElement);
     addPlace(arrElement.name, arrElement.link);
 
-    togglePopupClass(popupAdd, 'popup_opened');
+    togglePopupAdd();
 };
 
 //закрытие popup Add через overlay
@@ -165,18 +153,17 @@ const closePopupAddOverlay = function (event) {
         return;
     }
     
-    togglePopupClass(popupAdd, 'popup_opened');
+    togglePopupAdd();
 };
 
 //функция открытия  закрытия popup с просмотром картинки
-function openClosePopupPlacePic(_event) {
+function togglePopupPlacePic(_event) {
     if (!popupPicView.classList.contains('popup-pic_opened')) {  
         popupPicImg.src = event.target.src;
         popupPicTitle.textContent = event.target.alt;
     }
 
-    togglePopupClass(popupPicView, 'popup-pic_opened');
-    // popupPicView.classList.toggle('popup-pic_opened');
+    popupPicView.classList.toggle('popup-pic_opened');
 };
 
 //закрытие popup просмотра картинки через overlay
@@ -185,23 +172,23 @@ const closePopupPicViewOverlay = function (event) {
         return;
     }
 
-    togglePopupClass(popupPicView, 'popup-pic_opened');;
+    togglePopupPlacePic();
 };
 
 //закрытие просмотра картинки
-popupPicViewCloseBtn.addEventListener('click', openClosePopupPlacePic);
+popupPicViewCloseBtn.addEventListener('click', togglePopupPlacePic);
 popupPicView.addEventListener('click', closePopupPicViewOverlay)
 
 // bind toggle to popups
-popupEditOpenBtn.addEventListener('click', openEditPopup);
-popupAddOpenBtn.addEventListener('click', openPopupAdd);
-popupEditCloseBtn.addEventListener('click', openEditPopup);
-popupAddCloseBtn.addEventListener('click', openPopupAdd);
+popupEditOpenBtn.addEventListener('click', togglePopup);
+popupAddOpenBtn.addEventListener('click', togglePopupAdd);
+popupEditCloseBtn.addEventListener('click', togglePopup);
+popupAddCloseBtn.addEventListener('click', togglePopupAdd);
 
 // close on overlay click
-popupEdit.addEventListener('click', closeEditPopupOverlay);
+popupEdit.addEventListener('click', closePopupOverlay);
 popupAdd.addEventListener('click', closePopupAddOverlay);
 
 // submit events
-profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
-placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
+profileFormEdit.addEventListener('submit', editProfileSubmitHandler);
+placeFormAdd.addEventListener('submit', addPlaceSubmitHandler);

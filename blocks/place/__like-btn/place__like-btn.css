@@ -15,6 +15,7 @@
     padding: 0;
     outline: none;
     transition: 1s;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .place__like-btn:hover {

@@ -1,8 +1,6 @@
 @import url(./__place/popup-pic__place.css);
 @import url(./__img/popup-pic__img.css);
-
 @import url(./__title/popup-pic__title.css);
-@import url(./__close/popup-pic__close.css);
 @import url(./__container/popup-pic__container.css);
 
 .popup-pic {
