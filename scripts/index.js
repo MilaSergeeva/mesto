@@ -59,7 +59,7 @@ const togglePopupClass = function (name, value) {
 };
 
 //Открыть Edit popup, заполнить значениями
-function openEditPopup(_event) {
+const openEditPopup = function (_event) {
     if (!popupEdit.classList.contains('popup_opened')) {
         nameInput.value = userName.textContent;
         occupationInput.value = userOccupation.textContent;
@@ -78,7 +78,7 @@ const closeEditPopupOverlay = function (event) {
 };
 
 //Придать новые значения в profile
-function handleEditProfileSubmit(event) {
+const handleEditProfileSubmit = function (event) {
     event.preventDefault();
 
     userName.textContent = nameInput.value;
@@ -87,6 +87,21 @@ function handleEditProfileSubmit(event) {
     togglePopupClass(popupEdit, 'popup_opened');
 };
 
+//функция открытия  закрытия popup с просмотром картинки
+const openClosePopupPlacePic = function (_event) {
+    if (!popupPicView.classList.contains('popup-pic_opened')) {  
+        popupPicImg.src = event.target.src;
+        popupPicTitle.textContent = event.target.alt;
+    }
+
+    togglePopupClass(popupPicView, 'popup-pic_opened');
+    // popupPicView.classList.toggle('popup-pic_opened');
+};
+
+//функция ставим лайк
+const handleLikeButton = function (event) {
+    event.target.classList.toggle('place__like-btn_on');
+};
 
 //рендер карточки места
 function renderPlace(name, link) {
@@ -140,12 +155,9 @@ const openPopupAdd = function (_event) {
     // popupAdd.classList.toggle('popup_opened');
 };
 
-//функция ставим лайк
-function handleLikeButton(event) {
-    event.target.classList.toggle('place__like-btn_on');
-};
 
-function handleAddPlaceSubmit(event) {
+
+const handleAddPlaceSubmit = function (event) {
     event.preventDefault();
     
     const arrElement = { 
@@ -168,16 +180,7 @@ const closePopupAddOverlay = function (event) {
     togglePopupClass(popupAdd, 'popup_opened');
 };
 
-//функция открытия  закрытия popup с просмотром картинки
-function openClosePopupPlacePic(_event) {
-    if (!popupPicView.classList.contains('popup-pic_opened')) {  
-        popupPicImg.src = event.target.src;
-        popupPicTitle.textContent = event.target.alt;
-    }
 
-    togglePopupClass(popupPicView, 'popup-pic_opened');
-    // popupPicView.classList.toggle('popup-pic_opened');
-};
 
 //закрытие popup просмотра картинки через overlay
 const closePopupPicViewOverlay = function (event) {
