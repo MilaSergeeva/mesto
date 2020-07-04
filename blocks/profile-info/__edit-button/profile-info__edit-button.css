@@ -1,4 +1,4 @@
-.profile-info__edit-button{
+.profile-info__edit-button {
     display: block;
     background-image: url(../../../images/pen.svg);
     height: 24px;
@@ -21,7 +21,7 @@
     transition: .5s ease-in-out;
 }
 
-@media screen and (max-width: 700px) {  
+@media screen and (max-width: 700px) {
     .profile-info__edit-button {
         height: 18px;
         width: 18px;

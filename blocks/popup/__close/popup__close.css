@@ -3,9 +3,9 @@
     display: block;
     top: -48px;
     right: -48px;
-    cursor: pointer; 
+    cursor: pointer;
     border: none;
-    box-shadow: none; 
+    box-shadow: none;
     padding: 0;
     box-sizing: border-box;
     background-image: url(../../../images/close_icon.svg);
@@ -17,7 +17,6 @@
     background-color: rgba(0, 0, 0, 0);
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    
 }
 
 .popup__close:hover {
@@ -25,7 +24,7 @@
     transition: .5s ease-in-out;
 }
 
-@media screen and (max-width: 700px) {  
+@media screen and (max-width: 700px) {
     .popup__close {
         width: 8.2vw;
         height: 8.2vw;

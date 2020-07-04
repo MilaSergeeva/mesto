@@ -2,7 +2,6 @@
 @import url(./__img/popup-pic__img.css);
 @import url(./__title/popup-pic__title.css);
 @import url(./__container/popup-pic__container.css);
-
 .popup-pic {
     position: fixed;
     top: 0;
@@ -24,5 +23,3 @@
     visibility: hidden;
     transition: opacity .5s linear, visibility .5s linear;
 }
-
-

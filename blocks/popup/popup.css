@@ -3,7 +3,6 @@
 @import url(./__info/popup__info.css);
 @import url(./__btn-save/popup__btn-save.css);
 @import url(./__close/popup__close.css);
-
 .popup {
     position: fixed;
     top: 0;
@@ -26,7 +25,7 @@
     transition: opacity .5s linear, visibility .5s linear;
 }
 
-@media screen and (max-width: 500px) {  
+@media screen and (max-width: 500px) {
     .popup {
         padding: 0 9.6vw;
         box-sizing: border-box;

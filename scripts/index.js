@@ -19,15 +19,14 @@ const placeFormAdd = popupAdd.querySelector('.popup__form');
 const popupAddCloseBtn = popupAdd.querySelector('.popup__close');
 
 // Картиночки
-const places =  document.querySelector('.places');
+const places = document.querySelector('.places');
 
 const popupPicView = document.querySelector('.popup-pic');
 const popupPicImg = document.querySelector('.popup-pic__img');
 const popupPicTitle = document.querySelector('.popup-pic__title');
 const popupPicViewCloseBtn = popupPicView.querySelector('.popup__close');
 
-const initialCards = [
-    {
+const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
     },
@@ -53,53 +52,52 @@ const initialCards = [
     }
 ];
 
-
-const togglePopupClass = function (name, value) {
-    name.classList.toggle(value);
+//Переключатель класса popup_opened
+const togglePopupClass = function(element) {
+    element.classList.toggle('popup_opened');
 };
 
-//Открыть Edit popup, заполнить значениями
-const openEditPopup = function (_event) {
-    if (!popupEdit.classList.contains('popup_opened')) {
-        nameInput.value = userName.textContent;
-        occupationInput.value = userOccupation.textContent;
-    }
+//закрытие popup
+const handleClosePopupElement = function(event) {
+    const popupElement = event.target.closest('.popup');
 
-    togglePopupClass(popupEdit, 'popup_opened');
+    togglePopupClass(popupElement);
 };
 
 // закрыть popup при нажатии на зону вне popup
-const closeEditPopupOverlay = function (event) {
-    if (event.target !== event.currentTarget) {
-        return;
+const closePopupOverlay = function(event) {
+    const popupElement = event.target
+    if (popupElement.classList.contains('popup')) {
+        togglePopupClass(popupElement);
     }
-    
-    togglePopupClass(popupEdit, 'popup_opened');
+};
+
+//Открыть Edit popup, заполнить значениями
+const openEditPopup = function(_event) {
+    nameInput.value = userName.textContent;
+    occupationInput.value = userOccupation.textContent;
+    togglePopupClass(popupEdit);
 };
 
 //Придать новые значения в profile
-const handleEditProfileSubmit = function (event) {
+const handleEditProfileSubmit = function(event) {
     event.preventDefault();
 
     userName.textContent = nameInput.value;
     userOccupation.textContent = occupationInput.value;
 
-    togglePopupClass(popupEdit, 'popup_opened');
+    togglePopupClass(popupEdit);
 };
 
-//функция открытия  закрытия popup с просмотром картинки
-const openClosePopupPlacePic = function (_event) {
-    if (!popupPicView.classList.contains('popup-pic_opened')) {  
-        popupPicImg.src = event.target.src;
-        popupPicTitle.textContent = event.target.alt;
-    }
-
-    togglePopupClass(popupPicView, 'popup-pic_opened');
-    // popupPicView.classList.toggle('popup-pic_opened');
+//функция открытия popup с просмотром картинки
+const openPopupPlacePic = function(_event) {
+    popupPicImg.src = event.target.src;
+    popupPicTitle.textContent = event.target.alt;
+    togglePopupClass(popupPicView);
 };
 
 //функция ставим лайк
-const handleLikeButton = function (event) {
+const handleLikeButton = function(event) {
     event.target.classList.toggle('place__like-btn_on');
 };
 
@@ -109,102 +107,81 @@ function renderPlace(name, link) {
     const place = placesTemplateElement.cloneNode(true);
 
     place.querySelector('.place__title').textContent = name; //заполняем элемент карточки по индексу массива
-    
-    const img = place.querySelector('.place__img');
-    
-    img.src = link;
-    img.alt = name;
+
+    const placeImg = place.querySelector('.place__img');
+
+    placeImg.src = link;
+    placeImg.alt = name;
     //Просмотр картинки из галереи
-    img.addEventListener('click', openClosePopupPlacePic);
-    //Бинды иментов для элементов place
-    place.querySelector('.place__bin-btn').addEventListener('click', deliteCard);
+    placeImg.addEventListener('click', openPopupPlacePic);
+    //Бинды ивентов для элементов place
+    place.querySelector('.place__bin-btn').addEventListener('click', deleteCard);
     place.querySelector('.place__like-btn').addEventListener('click', handleLikeButton);
 
     return place;
-};
+}
 
 function addPlace(name, link) {
-    const renderedPlace = renderPlace(name, link);    
+    const renderedPlace = renderPlace(name, link);
     placeNameInput.value = "";
     placeLinkInput.value = "";
 
     places.prepend(renderedPlace);
-};
+}
 
+//создание карточек для всех еллементов массива
 initialCards.reverse().forEach(element => {
     addPlace(element.name, element.link);
-   
-});
+
+})
 
 //удаление карточки
-function deliteCard(event) {
-    const placeDelite = event.target.closest('.place');
-    // remove from array а может быть и нет
-    
-    placeDelite.remove();
-};
+function deleteCard(event) {
+    const placeDelete = event.target.closest('.place');
+
+    placeDelete.remove();
+}
 
 //функция открытия popup add 
-const openPopupAdd = function (_event) {
-    if (!popupAdd.classList.contains('popup_opened')) {
-        placeNameInput.value = "";
-        placeLinkInput.value = "";
-    }
-
-    togglePopupClass(popupAdd, 'popup_opened');
-    // popupAdd.classList.toggle('popup_opened');
+const openPopupAdd = function(_event) {
+    placeNameInput.value = "";
+    placeLinkInput.value = "";
+    togglePopupClass(popupAdd);
 };
 
 
-
-const handleAddPlaceSubmit = function (event) {
+//добавление новой карточки на страницу
+const handleAddPlaceSubmit = function(event) {
     event.preventDefault();
-    
-    const arrElement = { 
+
+    const placeElement = {
         name: placeNameInput.value,
         link: placeLinkInput.value
     };
 
-    initialCards.unshift(arrElement);
-    addPlace(arrElement.name, arrElement.link);
+    addPlace(placeElement.name, placeElement.link);
 
-    togglePopupClass(popupAdd, 'popup_opened');
+    togglePopupClass(popupAdd);
 };
 
-//закрытие popup Add через overlay
-const closePopupAddOverlay = function (event) {
-    if (event.target !== event.currentTarget) {
-        return;
-    }
-    
-    togglePopupClass(popupAdd, 'popup_opened');
-};
-
-
-
-//закрытие popup просмотра картинки через overlay
-const closePopupPicViewOverlay = function (event) {
-    if (event.target !== event.currentTarget) {
-        return;
-    }
-
-    togglePopupClass(popupPicView, 'popup-pic_opened');;
-};
 
 //закрытие просмотра картинки
-popupPicViewCloseBtn.addEventListener('click', openClosePopupPlacePic);
-popupPicView.addEventListener('click', closePopupPicViewOverlay)
+popupPicViewCloseBtn.addEventListener('click', handleClosePopupElement);
+popupPicView.addEventListener('click', closePopupOverlay);
 
 // bind toggle to popups
 popupEditOpenBtn.addEventListener('click', openEditPopup);
 popupAddOpenBtn.addEventListener('click', openPopupAdd);
-popupEditCloseBtn.addEventListener('click', openEditPopup);
-popupAddCloseBtn.addEventListener('click', openPopupAdd);
+popupEditCloseBtn.addEventListener('click', handleClosePopupElement);
+popupAddCloseBtn.addEventListener('click', handleClosePopupElement);
 
-// close on overlay click
-popupEdit.addEventListener('click', closeEditPopupOverlay);
-popupAdd.addEventListener('click', closePopupAddOverlay);
+// // close on overlay click
+popupEdit.addEventListener('click', closePopupOverlay);
+popupAdd.addEventListener('click', closePopupOverlay);
 
-// submit events
+// // submit events
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
+
+//у меня создалось впечатление, что не все ваши комментарии у меня отображвются
+// обратилась в поддержку по этому поводу

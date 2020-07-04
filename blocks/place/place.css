@@ -4,9 +4,6 @@
 @import url(./__like-btn/place__like-btn.css);
 @import url(./__bin/place_bin.css);
 @import url(./__like-btn/__like-btn_on/place__like-btn_on.css);
-
-
-
 .place {
     background-color: #FFFFFF;
     border-radius: 10px;
