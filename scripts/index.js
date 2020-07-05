@@ -56,13 +56,6 @@ const togglePopupClass = function(element) {
     element.classList.toggle('popup_opened');
 };
 
-//закрытие popup
-const handleClosePopupElement = function(event) {
-    const popupElement = event.target.closest('.popup');
-
-    togglePopupClass(popupElement);
-};
-
 // закрыть popup при нажатии на зону вне popup
 const closePopupOverlay = function(event) {
     const popupElement = event.target
@@ -179,7 +172,7 @@ popupAdd.addEventListener('click', closePopupOverlay);
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
 
-
+//закрытие popup 
 popupCloseBtns.forEach((element) => {
     element.addEventListener('click', (event) => {
         const popupElement = event.target.closest('.popup');
@@ -187,9 +180,3 @@ popupCloseBtns.forEach((element) => {
         togglePopupClass(popupElement);
     });
 });
-
-// .addEventListener('click', (event) => {
-//     const popupElement = event.target.closest('.popup');
-
-//     togglePopupClass(popupElement);
-// });
