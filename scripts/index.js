@@ -9,14 +9,12 @@ const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
 const profileFormEdit = popupEdit.querySelector('.popup__form');
-const popupEditCloseBtn = popupEdit.querySelector('.popup__close');
 
 // add place popup
 const popupAdd = document.querySelector('.popup_add');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
 const placeFormAdd = popupAdd.querySelector('.popup__form');
-const popupAddCloseBtn = popupAdd.querySelector('.popup__close');
 
 // Картиночки
 const places = document.querySelector('.places');
@@ -24,7 +22,6 @@ const places = document.querySelector('.places');
 const popupPicView = document.querySelector('.popup-pic');
 const popupPicImg = document.querySelector('.popup-pic__img');
 const popupPicTitle = document.querySelector('.popup-pic__title');
-const popupPicViewCloseBtn = popupPicView.querySelector('.popup__close');
 
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 
@@ -168,14 +165,11 @@ const handleAddPlaceSubmit = function(event) {
 
 
 //закрытие просмотра картинки
-// popupPicViewCloseBtn.addEventListener('click', handleClosePopupElement);
 popupPicView.addEventListener('click', closePopupOverlay);
 
 // bind toggle to popups
 popupEditOpenBtn.addEventListener('click', openEditPopup);
 popupAddOpenBtn.addEventListener('click', openPopupAdd);
-// popupEditCloseBtn.addEventListener('click', handleClosePopupElement);
-// popupAddCloseBtn.addEventListener('click', handleClosePopupElement);
 
 // // close on overlay click
 popupEdit.addEventListener('click', closePopupOverlay);
