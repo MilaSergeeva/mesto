@@ -26,6 +26,8 @@ const popupPicImg = document.querySelector('.popup-pic__img');
 const popupPicTitle = document.querySelector('.popup-pic__title');
 const popupPicViewCloseBtn = popupPicView.querySelector('.popup__close');
 
+const popupCloseBtns = document.querySelectorAll('.popup__close');
+
 const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -166,14 +168,14 @@ const handleAddPlaceSubmit = function(event) {
 
 
 //закрытие просмотра картинки
-popupPicViewCloseBtn.addEventListener('click', handleClosePopupElement);
+// popupPicViewCloseBtn.addEventListener('click', handleClosePopupElement);
 popupPicView.addEventListener('click', closePopupOverlay);
 
 // bind toggle to popups
 popupEditOpenBtn.addEventListener('click', openEditPopup);
 popupAddOpenBtn.addEventListener('click', openPopupAdd);
-popupEditCloseBtn.addEventListener('click', handleClosePopupElement);
-popupAddCloseBtn.addEventListener('click', handleClosePopupElement);
+// popupEditCloseBtn.addEventListener('click', handleClosePopupElement);
+// popupAddCloseBtn.addEventListener('click', handleClosePopupElement);
 
 // // close on overlay click
 popupEdit.addEventListener('click', closePopupOverlay);
@@ -183,5 +185,17 @@ popupAdd.addEventListener('click', closePopupOverlay);
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
 
-//у меня создалось впечатление, что не все ваши комментарии у меня отображвются
-// обратилась в поддержку по этому поводу
+
+popupCloseBtns.forEach((element) => {
+    element.addEventListener('click', (event) => {
+        const popupElement = event.target.closest('.popup');
+
+        togglePopupClass(popupElement);
+    });
+});
+
+// .addEventListener('click', (event) => {
+//     const popupElement = event.target.closest('.popup');
+
+//     togglePopupClass(popupElement);
+// });
