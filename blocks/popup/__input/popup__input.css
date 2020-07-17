@@ -1,4 +1,4 @@
-.popup__info {
+.popup__input {
     max-width: 358px;
     width: 100%;
     font-size: 14px;
@@ -9,10 +9,18 @@
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
+    outline: none; 
+    box-shadow: none;
+    background-color: none
+}
+
+.popup__input:focus {
+    outline: 0;
+    
 }
 
 @media screen and (max-width: 700px) {
-    .popup__user-info {
+    .popup__input {
         padding-top: 4.3vw;
     }
 }
