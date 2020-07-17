@@ -20,6 +20,7 @@ const hideInputError = (inputElement, validationConfig,) => {
 function checkInputValidity(inputElement, validationConfig) {
   if (!inputElement.validity.valid) {
     showInputError(inputElement, validationConfig, inputElement.validationMessage);
+    popupCloseBtns.disabled = true;
   } else {
     hideInputError(inputElement, validationConfig);
   }
