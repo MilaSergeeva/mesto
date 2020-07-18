@@ -1,6 +1,5 @@
 const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
 const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
-const popups = document.querySelectorAll('.popup');
 
 // edit user popup
 const popupEdit = document.querySelector('.popup_edit');
@@ -14,6 +13,7 @@ const profileFormEdit = popupEdit.querySelector('.popup__form');
 const popupAdd = document.querySelector('.popup_add');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
+const savePlaceButton = popupAdd.querySelector('button[type="submit"]');
 const placeFormAdd = popupAdd.querySelector('.popup__form');
 
 // Картиночки
@@ -51,24 +51,24 @@ const initialCards = [{
   }
 ];
 
-const closePopupListener = function (event) {
+const closePopupByEscListener = function (event) {
   if (event.keyCode === 27) {
     const popupOpened = document.querySelector('.popup_opened');
 
     if (popupOpened) {
       togglePopupClass(popupOpened);
     }
-  };
-}
+  }
+};
 
 //Переключатель класса popup_opened
 const togglePopupClass = function(element) {
   element.classList.toggle('popup_opened');
 
   if (element.classList.contains('popup_opened')) {
-    document.addEventListener('keydown', closePopupListener);
+    document.addEventListener('keydown', closePopupByEscListener);
   } else {
-    document.removeEventListener('keydown', closePopupListener);
+    document.removeEventListener('keydown', closePopupByEscListener);
   }
 };
 
@@ -86,7 +86,7 @@ const openEditPopup = function(_event) {
   nameInput.value = userName.textContent;
   occupationInput.value = userOccupation.textContent;
 
-  nameInput.dispatchEvent(new Event('input'))
+  nameInput.dispatchEvent(new Event('input'));
 
   togglePopupClass(popupEdit);
 };
@@ -159,6 +159,12 @@ function deleteCard(event) {
 const openPopupAdd = function(_event) {
   placeNameInput.value = "";
   placeLinkInput.value = "";
+
+  savePlaceButton.classList.add('popup__btn-save_disabled');
+  savePlaceButton.disabled = true;
+
+  // альтернативное решение
+  // placeNameInput.dispatchEvent(new Event('input'));
 
   togglePopupClass(popupAdd);
 };

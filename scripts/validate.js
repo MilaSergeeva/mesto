@@ -11,7 +11,7 @@ const showInputError = (inputElement, validationConfig, errorMessage) => {
 const hideInputError = (inputElement, validationConfig,) => {
   const errorElement = inputElement.closest('.popup__input-container').querySelector('.popup__error');
 
-  inputElement.classList.remove(validationConfig.inputErrorClass);
+  inputElement.classList.remove(validationConfig.inputErrorClass); 
   errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = '';
 };
@@ -24,7 +24,7 @@ function checkInputValidity(inputElement, validationConfig) {
   } else {
     hideInputError(inputElement, validationConfig);
   }
-};
+}
 
 // для элементов формы находить инпуты
 // и биндить для них проверку валидности
@@ -68,9 +68,7 @@ function toggleButtonState(inputList, buttonElement, validationConfig) {
 }
 
 function enableValidation(validationConfig) {
-  const { 
-    formSelector
-  } = validationConfig;
+  const { formSelector } = validationConfig;
   
   const formList = Array.from(document.querySelectorAll(formSelector));
   
@@ -81,7 +79,7 @@ function enableValidation(validationConfig) {
 
     setEventListeners(formElement, validationConfig);
   });
-};
+}
 
 
 enableValidation({
