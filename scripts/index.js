@@ -160,8 +160,7 @@ const openPopupAdd = function(_event) {
   placeNameInput.value = "";
   placeLinkInput.value = "";
 
-  savePlaceButton.classList.add('popup__btn-save_disabled');
-  savePlaceButton.disabled = true;
+  disableSubmitButtonElement(savePlaceButton, 'popup__btn-save_disabled');
 
   // альтернативное решение
   // placeNameInput.dispatchEvent(new Event('input'));

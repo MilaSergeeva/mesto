@@ -56,14 +56,25 @@ function hasInvalidInput(inputList) {
   });
 }
 
+// добавление класса для кнопки сабмит, который делает ее не активной
+
+function disableSubmitButtonElement(element, disabledElementClassName) {
+  element.classList.add(disabledElementClassName);
+  element.disabled = true;
+}
+
+// удаление класса для кнопки сабмит, который делает ее не активной
+function enableSubmitButtonElement(element, disabledElementClassName) {
+  element.classList.remove(disabledElementClassName);
+  element.disabled = false;
+}
+
 //Кнопка ввода переключение класса
 function toggleButtonState(inputList, buttonElement, validationConfig) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(validationConfig.inactiveButtonClass);
-    buttonElement.disabled = true;
+    disableSubmitButtonElement(buttonElement, validationConfig.inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    buttonElement.disabled = false;
+    enableSubmitButtonElement(buttonElement, validationConfig.inactiveButtonClass);
   }
 }
 
