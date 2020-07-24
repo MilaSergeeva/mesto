@@ -25,33 +25,40 @@ const popupPicTitle = document.querySelector('.popup-pic__title');
 
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 
-const initialCards = [{
+const initialCards = [
+  {
     name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
     name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
     name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
     name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
     name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
     name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    link:
+      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 
-const closePopupByEscListener = function (event) {
+const closePopupByEscListener = function(event) {
   if (event.keyCode === 27) {
     const popupOpened = document.querySelector('.popup_opened');
 
@@ -77,7 +84,7 @@ const closePopupOverlay = function(event) {
   const popupElement = event.target;
 
   if (popupElement.classList.contains('popup')) {
-      togglePopupClass(popupElement);
+    togglePopupClass(popupElement);
   }
 };
 
@@ -116,7 +123,8 @@ const handleLikeButton = function(event) {
 
 //рендер карточки места
 function renderPlace(name, link) {
-  const placesTemplateElement = document.querySelector('.places-template').content;
+  const placesTemplateElement = document.querySelector('.places-template')
+    .content;
   const place = placesTemplateElement.cloneNode(true);
 
   place.querySelector('.place__title').textContent = name; //заполняем элемент карточки по индексу массива
@@ -129,7 +137,9 @@ function renderPlace(name, link) {
   placeImg.addEventListener('click', openPopupPlacePic);
   //Бинды ивентов для элементов place
   place.querySelector('.place__bin-btn').addEventListener('click', deleteCard);
-  place.querySelector('.place__like-btn').addEventListener('click', handleLikeButton);
+  place
+    .querySelector('.place__like-btn')
+    .addEventListener('click', handleLikeButton);
 
   return place;
 }
@@ -137,37 +147,41 @@ function renderPlace(name, link) {
 function addPlace(name, link) {
   const renderedPlace = renderPlace(name, link);
 
-  placeNameInput.value = "";
-  placeLinkInput.value = "";
+  placeNameInput.value = '';
+  placeLinkInput.value = '';
 
   places.prepend(renderedPlace);
 }
 
 //создание карточек для всех еллементов массива
 initialCards.reverse().forEach(element => {
-    addPlace(element.name, element.link);
+  addPlace(element.name, element.link);
 });
 
 //удаление карточки
 function deleteCard(event) {
-    const placeDelete = event.target.closest('.place');
+  const placeDelete = event.target.closest('.place');
 
-    placeDelete.remove();
+  placeDelete.remove();
 }
 
-//функция открытия popup add 
+//функция открытия popup add
 const openPopupAdd = function(_event) {
-  placeNameInput.value = "";
-  placeLinkInput.value = "";
+  placeNameInput.value = '';
+  placeLinkInput.value = '';
 
-  disableSubmitButtonElement(savePlaceButton, 'popup__btn-save_disabled');
+  // disableSubmitButtonElement(savePlaceButton, 'popup__btn-save_disabled');
+
+  // function disableSubmitButtonElement(savePlaceButton) {
+  //   savePlaceButton.classList.add('popup__btn-save_disabled');
+  //   savePlaceButton.disabled = true;
+  // }
 
   // альтернативное решение
-  // placeNameInput.dispatchEvent(new Event('input'));
+  placeNameInput.dispatchEvent(new Event('input'));
 
   togglePopupClass(popupAdd);
 };
-
 
 //добавление новой карточки на страницу
 const handleAddPlaceSubmit = function(event) {
@@ -182,7 +196,6 @@ const handleAddPlaceSubmit = function(event) {
 
   togglePopupClass(popupAdd);
 };
-
 
 //закрытие просмотра картинки
 popupPicView.addEventListener('click', closePopupOverlay);
@@ -199,9 +212,9 @@ popupAdd.addEventListener('click', closePopupOverlay);
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
 
-//закрытие popup 
-popupCloseBtns.forEach((element) => {
-  element.addEventListener('click', (event) => {
+//закрытие popup
+popupCloseBtns.forEach(element => {
+  element.addEventListener('click', event => {
     const popupElement = event.target.closest('.popup');
 
     togglePopupClass(popupElement);
