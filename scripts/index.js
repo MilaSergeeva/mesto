@@ -13,7 +13,7 @@ const profileFormEdit = popupEdit.querySelector('.popup__form');
 const popupAdd = document.querySelector('.popup_add');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
-const savePlaceButton = popupAdd.querySelector('button[type="submit"]');
+//const savePlaceButton = popupAdd.querySelector('button[type="submit"]');
 const placeFormAdd = popupAdd.querySelector('.popup__form');
 
 // Картиночки
@@ -24,6 +24,11 @@ const popupPicImg = document.querySelector('.popup-pic__img');
 const popupPicTitle = document.querySelector('.popup-pic__title');
 
 const popupCloseBtns = document.querySelectorAll('.popup__close');
+
+const placesTemplateElement = document.querySelector('.places-template')
+  .content;
+
+export { popupPicImg, popupPicTitle };
 
 const initialCards = [
   {
@@ -108,44 +113,9 @@ const handleEditProfileSubmit = function(event) {
   togglePopupClass(popupEdit);
 };
 
-//функция открытия popup с просмотром картинки
-const openPopupPlacePic = function(_event) {
-  popupPicImg.src = event.target.src;
-  popupPicTitle.textContent = event.target.alt;
-
-  togglePopupClass(popupPicView);
-};
-
-//функция ставим лайк
-const handleLikeButton = function(event) {
-  event.target.classList.toggle('place__like-btn_on');
-};
-
-//рендер карточки места
-function renderPlace(name, link) {
-  const placesTemplateElement = document.querySelector('.places-template')
-    .content;
-  const place = placesTemplateElement.cloneNode(true);
-
-  place.querySelector('.place__title').textContent = name; //заполняем элемент карточки по индексу массива
-
-  const placeImg = place.querySelector('.place__img');
-
-  placeImg.src = link;
-  placeImg.alt = name;
-  //Просмотр картинки из галереи
-  placeImg.addEventListener('click', openPopupPlacePic);
-  //Бинды ивентов для элементов place
-  place.querySelector('.place__bin-btn').addEventListener('click', deleteCard);
-  place
-    .querySelector('.place__like-btn')
-    .addEventListener('click', handleLikeButton);
-
-  return place;
-}
-
 function addPlace(name, link) {
-  const renderedPlace = renderPlace(name, link);
+  const card = new Card(name, link, placesTemplateElement);
+  const renderedPlace = card.renderPlace();
 
   placeNameInput.value = '';
   placeLinkInput.value = '';
@@ -153,31 +123,16 @@ function addPlace(name, link) {
   places.prepend(renderedPlace);
 }
 
-//создание карточек для всех еллементов массива
+// //создание карточек для всех еллементов массива
 initialCards.reverse().forEach(element => {
   addPlace(element.name, element.link);
 });
-
-//удаление карточки
-function deleteCard(event) {
-  const placeDelete = event.target.closest('.place');
-
-  placeDelete.remove();
-}
 
 //функция открытия popup add
 const openPopupAdd = function(_event) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
 
-  // disableSubmitButtonElement(savePlaceButton, 'popup__btn-save_disabled');
-
-  // function disableSubmitButtonElement(savePlaceButton) {
-  //   savePlaceButton.classList.add('popup__btn-save_disabled');
-  //   savePlaceButton.disabled = true;
-  // }
-
-  // альтернативное решение
   placeNameInput.dispatchEvent(new Event('input'));
 
   togglePopupClass(popupAdd);
@@ -220,3 +175,28 @@ popupCloseBtns.forEach(element => {
     togglePopupClass(popupElement);
   });
 });
+
+// валидация формы
+// для каждой формы
+// -- создать экземпляр класса FormValidator c передаными в него validation config & формы
+// -- -- вызывать метод enableValidation
+const formSelector = '.popup__form';
+
+export const validationConfig = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn-save',
+  inactiveButtonClass: 'popup__btn-save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const formList = Array.from(document.querySelectorAll(formSelector));
+
+formList.forEach(formElement => {
+  const formValidator = new FormValidator(validationConfig, formElement);
+
+  formValidator.enableValidation();
+});
+
+import Card from './card.js';
+import FormValidator from './formValidator.js';
