@@ -1,5 +1,5 @@
-import { Card } from './card.js';
-import { FormValidator } from './formValidator.js';
+import { Card } from './Card.js/index.js.js';
+import { FormValidator } from './FormValidator.js';
 
 const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
 const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
