@@ -1,5 +1,3 @@
-import validationConfig from './index.js';
-
 export class FormValidator {
   constructor(validationConfig, formElement) {
     this.validationConfig = validationConfig;

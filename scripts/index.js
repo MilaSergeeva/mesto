@@ -28,7 +28,7 @@ const popupCloseBtns = document.querySelectorAll('.popup__close');
 const placesTemplateElement = document.querySelector('.places-template')
   .content;
 
-export { popupPicImg, popupPicTitle };
+export { popupPicImg, popupPicTitle, togglePopupClass };
 
 const initialCards = [
   {
@@ -182,7 +182,7 @@ popupCloseBtns.forEach(element => {
 // -- -- вызывать метод enableValidation
 const formSelector = '.popup__form';
 
-export const validationConfig = {
+const validationConfig = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__btn-save',
   inactiveButtonClass: 'popup__btn-save_disabled',

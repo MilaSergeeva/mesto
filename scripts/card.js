@@ -1,4 +1,4 @@
-import { popupPicImg, popupPicTitle } from './index.js';
+import { popupPicImg, popupPicTitle, togglePopupClass } from './index.js';
 
 export class Card {
   constructor(name, link, placesTemplateElement) {
