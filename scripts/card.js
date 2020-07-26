@@ -1,6 +1,6 @@
 import { popupPicImg, popupPicTitle } from './index.js';
 
-export default class Card {
+export class Card {
   constructor(name, link, placesTemplateElement) {
     this.name = name;
     this.link = link;
