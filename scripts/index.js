@@ -1,3 +1,6 @@
+import { Card } from './card.js';
+import { FormValidator } from './formValidator.js';
+
 const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
 const popupAddOpenBtn = document.querySelector('.profile__add-button'); //добавляем кнопку добавить
 
@@ -20,15 +23,11 @@ const placeFormAdd = popupAdd.querySelector('.popup__form');
 const places = document.querySelector('.places');
 
 const popupPicView = document.querySelector('.popup-pic');
-const popupPicImg = document.querySelector('.popup-pic__img');
-const popupPicTitle = document.querySelector('.popup-pic__title');
 
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 
 const placesTemplateElement = document.querySelector('.places-template')
   .content;
-
-export { popupPicImg, popupPicTitle, togglePopupClass };
 
 const initialCards = [
   {
@@ -113,8 +112,13 @@ const handleEditProfileSubmit = function(event) {
   togglePopupClass(popupEdit);
 };
 
+const popupPicViewUtils = {
+  closePopupByEscListener,
+  togglePopupClass
+};
+
 function addPlace(name, link) {
-  const card = new Card(name, link, placesTemplateElement);
+  const card = new Card(name, link, placesTemplateElement, popupPicViewUtils);
   const renderedPlace = card.renderPlace();
 
   placeNameInput.value = '';
@@ -176,7 +180,6 @@ popupCloseBtns.forEach(element => {
   });
 });
 
-// валидация формы
 // для каждой формы
 // -- создать экземпляр класса FormValidator c передаными в него validation config & формы
 // -- -- вызывать метод enableValidation
@@ -197,6 +200,3 @@ formList.forEach(formElement => {
 
   formValidator.enableValidation();
 });
-
-import Card from './card.js';
-import FormValidator from './formValidator.js';

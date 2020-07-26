@@ -1,10 +1,10 @@
-import { popupPicImg, popupPicTitle, togglePopupClass } from './index.js';
-
-export class Card {
-  constructor(name, link, placesTemplateElement) {
+class Card {
+  constructor(name, link, placesTemplateElement, popupPicViewUtils) {
     this.name = name;
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
+    this.closePopupByEscListener = popupPicViewUtils.closePopupByEscListener;
+    this.togglePopupClass = popupPicViewUtils.togglePopupClass;
   }
 
   _getTemplate() {
@@ -26,11 +26,12 @@ export class Card {
   }
 
   //функция открытия popup с просмотром картинки
-  _openPopupPlacePic(_event) {
-    popupPicImg.src = event.target.src;
-    popupPicTitle.textContent = event.target.alt;
+  _openPopupPlacePic() {
+    document.querySelector('.popup-pic__img').src = event.target.src;
+    document.querySelector('.popup-pic__title').textContent = event.target.alt;
 
-    togglePopupClass(popupPicView);
+    const popupPicView = document.querySelector('.popup-pic');
+    this.togglePopupClass(popupPicView);
   }
 
   //рендер карточки места
@@ -60,3 +61,5 @@ export class Card {
     return place;
   }
 }
+
+export { Card };
