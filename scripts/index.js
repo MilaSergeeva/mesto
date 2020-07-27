@@ -1,4 +1,4 @@
-import { Card } from './Card.js/index.js.js';
+import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
 const popupEditOpenBtn = document.querySelector('.profile-info__edit-button');
