@@ -4,7 +4,7 @@ class Card {
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
     this.closePopupByEscListener = popupPicViewUtils.closePopupByEscListener;
-    this.togglePopupClass = popupPicViewUtils.togglePopupClass;
+    this.togglePopupElement = popupPicViewUtils.togglePopupElement;
   }
 
   _getTemplate() {
@@ -23,6 +23,7 @@ class Card {
     const placeDelete = event.target.closest('.place');
 
     placeDelete.remove();
+    event.target.removeEventListener('click', this._deleteCard);
   }
 
   //функция открытия popup с просмотром картинки
@@ -31,7 +32,7 @@ class Card {
     document.querySelector('.popup-pic__title').textContent = event.target.alt;
 
     const popupPicView = document.querySelector('.popup-pic');
-    this.togglePopupClass(popupPicView);
+    this.togglePopupElement(popupPicView);
   }
 
   //рендер карточки места
