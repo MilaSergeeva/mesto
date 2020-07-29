@@ -8,9 +8,7 @@ class Card {
   }
 
   _getTemplate() {
-    const placeTamplate = this.placesTemplateElement.cloneNode(true);
-
-    return placeTamplate;
+    return this.placesTemplateElement.cloneNode(true);
   }
 
   //кнопка лайка
@@ -23,7 +21,10 @@ class Card {
     const placeDelete = event.target.closest('.place');
 
     placeDelete.remove();
+
     event.target.removeEventListener('click', this._deleteCard);
+    event.target.removeEventListener('click', this._handleLikeButton);
+    event.target.removeEventListener('click', this._openPopupPlacePic);
   }
 
   //функция открытия popup с просмотром картинки
