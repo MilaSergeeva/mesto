@@ -6,9 +6,7 @@ class FormValidator {
 
   //Показываем текст ошибки
   _showInputError(inputElement, errorMessage) {
-    const errorElement = inputElement
-      .closest('.popup__input-container')
-      .querySelector('.popup__error');
+    const errorElement = inputElement.closest('.popup__input-container').querySelector('.popup__error');
 
     inputElement.classList.add(this.validationConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -17,9 +15,7 @@ class FormValidator {
 
   //скрыть текст ошибки
   _hideInputError(inputElement) {
-    const errorElement = inputElement
-      .closest('.popup__input-container')
-      .querySelector('.popup__error');
+    const errorElement = inputElement.closest('.popup__input-container').querySelector('.popup__error');
 
     inputElement.classList.remove(this.validationConfig.inputErrorClass);
     errorElement.classList.remove(this.validationConfig.errorClass);
@@ -38,12 +34,8 @@ class FormValidator {
   // для элементов формы находить инпуты
   // и биндить для них проверку валидности
   _setEventListeners() {
-    const inputList = Array.from(
-      this.formElement.querySelectorAll(this.validationConfig.inputSelector)
-    );
-    const buttonElement = this.formElement.querySelector(
-      this.validationConfig.submitButtonSelector
-    );
+    const inputList = Array.from(this.formElement.querySelectorAll(this.validationConfig.inputSelector));
+    const buttonElement = this.formElement.querySelector(this.validationConfig.submitButtonSelector);
 
     inputList.forEach(inputElement => {
       inputElement.addEventListener('input', () => {

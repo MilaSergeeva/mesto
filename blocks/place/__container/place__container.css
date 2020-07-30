@@ -1,8 +1,8 @@
 .place__container {
-    display: flex;
-    justify-content: space-between;
-    padding: 24px 15px 24px 21px;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 15px 24px 21px;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
 }

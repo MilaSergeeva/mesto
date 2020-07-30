@@ -81,13 +81,14 @@ const handleEditProfileSubmit = function(event) {
   togglePopupElement(popupEdit);
 };
 
-const popupPicViewUtils = {
+const popupPicViewConfig = {
   closePopupByEscListener,
-  togglePopupElement
+  togglePopupElement,
+  popupPicView
 };
 
 function addPlace(name, link) {
-  const card = new Card(name, link, placesTemplateElement, popupPicViewUtils);
+  const card = new Card(name, link, placesTemplateElement, popupPicViewConfig);
   const renderedPlace = card.renderPlace();
 
   placeNameInput.value = '';

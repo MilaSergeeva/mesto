@@ -1,10 +1,11 @@
 class Card {
-  constructor(name, link, placesTemplateElement, popupPicViewUtils) {
+  constructor(name, link, placesTemplateElement, popupPicViewConfig) {
     this.name = name;
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
-    this.closePopupByEscListener = popupPicViewUtils.closePopupByEscListener;
-    this.togglePopupElement = popupPicViewUtils.togglePopupElement;
+    this.closePopupByEscListener = popupPicViewConfig.closePopupByEscListener;
+    this.togglePopupElement = popupPicViewConfig.togglePopupElement;
+    this.popup = popupPicViewConfig.popupPicView;
   }
 
   _getTemplate() {
@@ -12,53 +13,47 @@ class Card {
   }
 
   //кнопка лайка
-  _handleLikeButton(event) {
+  _handleLikeButton = event => {
     event.target.classList.toggle('place__like-btn_on');
-  }
+  };
 
   //удаление карточки
-  _deleteCard(event) {
-    const placeDelete = event.target.closest('.place');
+  _deleteCard = event => {
+    const place = event.target.closest('.place');
 
-    placeDelete.remove();
+    place.remove();
 
-    event.target.removeEventListener('click', this._deleteCard);
-    event.target.removeEventListener('click', this._handleLikeButton);
-    event.target.removeEventListener('click', this._openPopupPlacePic);
-  }
+    this.imageElement.removeEventListener('click', this._openPopupPlacePic);
+    this.deleteElement.removeEventListener('click', this._deleteCard);
+    this.likeElement.removeEventListener('click', this._handleLikeButton);
+  };
 
   //функция открытия popup с просмотром картинки
-  _openPopupPlacePic() {
-    document.querySelector('.popup-pic__img').src = event.target.src;
-    document.querySelector('.popup-pic__title').textContent = event.target.alt;
+  _openPopupPlacePic = () => {
+    this.popup.querySelector('.popup-pic__img').src = event.target.src;
+    this.popup.querySelector('.popup-pic__title').textContent = event.target.alt;
 
-    const popupPicView = document.querySelector('.popup-pic');
+    const popupPicView = this.popup;
+
     this.togglePopupElement(popupPicView);
-  }
+  };
 
   //рендер карточки места
   renderPlace() {
     const place = this._getTemplate();
+
     place.querySelector('.place__title').textContent = this.name;
 
-    const placeImg = place.querySelector('.place__img');
+    this.imageElement = place.querySelector('.place__img');
+    this.likeElement = place.querySelector('.place__like-btn');
+    this.deleteElement = place.querySelector('.place__bin-btn');
 
-    placeImg.src = this.link;
-    placeImg.alt = this.name;
+    this.imageElement.src = this.link;
+    this.imageElement.alt = this.name;
 
-    //Просмотр картинки из галереи
-    placeImg.addEventListener('click', event => {
-      this._openPopupPlacePic();
-    });
-
-    //Бинды ивентов для элементов place
-    place.querySelector('.place__bin-btn').addEventListener('click', event => {
-      this._deleteCard(event);
-    });
-
-    place.querySelector('.place__like-btn').addEventListener('click', event => {
-      this._handleLikeButton(event);
-    });
+    this.imageElement.addEventListener('click', this._openPopupPlacePic);
+    this.deleteElement.addEventListener('click', this._deleteCard);
+    this.likeElement.addEventListener('click', this._handleLikeButton);
 
     return place;
   }
