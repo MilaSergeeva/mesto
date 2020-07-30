@@ -12,50 +12,60 @@ class Card {
     return this.placesTemplateElement.cloneNode(true);
   }
 
-  //кнопка лайка
-  _handleLikeButton = event => {
-    event.target.classList.toggle('place__like-btn_on');
-  };
-
-  //удаление карточки
-  _deleteCard = event => {
-    const place = event.target.closest('.place');
-
-    place.remove();
-
+  _removeEventListeners() {
     this.imageElement.removeEventListener('click', this._openPopupPlacePic);
     this.deleteElement.removeEventListener('click', this._deleteCard);
     this.likeElement.removeEventListener('click', this._handleLikeButton);
-  };
+  }
 
-  //функция открытия popup с просмотром картинки
-  _openPopupPlacePic = () => {
-    this.popup.querySelector('.popup-pic__img').src = event.target.src;
-    this.popup.querySelector('.popup-pic__title').textContent = event.target.alt;
+  _setEventListeners() {
+    // верхнеуровневые стрелочные фунции в объекте не работают в сафари
 
-    const popupPicView = this.popup;
+    // кнопка лайк
+    this._handleLikeButton = event => {
+      event.target.classList.toggle('place__like-btn_on');
+    };
 
-    this.togglePopupElement(popupPicView);
-  };
+    //удаление карточки
+    this._deleteCard = event => {
+      const place = event.target.closest('.place');
 
-  //рендер карточки места
-  renderPlace() {
-    const place = this._getTemplate();
+      this._removeEventListeners();
 
-    place.querySelector('.place__title').textContent = this.name;
+      place.remove();
+    };
 
-    this.imageElement = place.querySelector('.place__img');
-    this.likeElement = place.querySelector('.place__like-btn');
-    this.deleteElement = place.querySelector('.place__bin-btn');
+    //функция открытия popup с просмотром картинки
+    this._openPopupPlacePic = event => {
+      this.popup.querySelector('.popup-pic__img').src = event.target.src;
+      this.popup.querySelector('.popup-pic__title').textContent = event.target.alt;
 
-    this.imageElement.src = this.link;
-    this.imageElement.alt = this.name;
+      const popupPicView = this.popup;
+
+      this.togglePopupElement(popupPicView);
+    };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);
     this.deleteElement.addEventListener('click', this._deleteCard);
     this.likeElement.addEventListener('click', this._handleLikeButton);
+  }
 
-    return place;
+  //рендер карточки места
+  renderPlace() {
+    this.place = this._getTemplate();
+
+    this.place.querySelector('.place__title').textContent = this.name;
+
+    this.imageElement = this.place.querySelector('.place__img');
+    this.likeElement = this.place.querySelector('.place__like-btn');
+    this.deleteElement = this.place.querySelector('.place__bin-btn');
+
+    this.imageElement.src = this.link;
+    this.imageElement.alt = this.name;
+
+    this._setEventListeners();
+
+    return this.place;
   }
 }
 
