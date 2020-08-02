@@ -80,10 +80,6 @@ class FormValidator {
   }
 
   enableValidation() {
-    this.formElement.addEventListener('submit', event => {
-      event.preventDefault();
-    });
-
     this._setEventListeners();
   }
 }

@@ -62,7 +62,7 @@ const closePopupOverlay = function(event) {
 };
 
 //Открыть Edit popup, заполнить значениями
-const openEditPopup = function(_event) {
+const openPopupEditProfile = function(_event) {
   nameInput.value = userName.textContent;
   occupationInput.value = userOccupation.textContent;
 
@@ -94,6 +94,8 @@ function addPlace(name, link) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
 
+  placeNameInput.dispatchEvent(new Event('input'));
+
   places.prepend(renderedPlace);
 }
 
@@ -103,7 +105,7 @@ initialCards.reverse().forEach(element => {
 });
 
 //функция открытия popup add
-const openPopupAdd = function(_event) {
+const openPopupAddPlace = function(_event) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
 
@@ -130,8 +132,8 @@ const handleAddPlaceSubmit = function(event) {
 popupPicView.addEventListener('click', closePopupOverlay);
 
 // bind toggle to popups
-popupEditOpenBtn.addEventListener('click', openEditPopup);
-popupAddOpenBtn.addEventListener('click', openPopupAdd);
+popupEditOpenBtn.addEventListener('click', openPopupEditProfile);
+popupAddOpenBtn.addEventListener('click', openPopupAddPlace);
 
 // // close on overlay click
 popupEdit.addEventListener('click', closePopupOverlay);

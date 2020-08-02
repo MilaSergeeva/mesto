@@ -19,8 +19,6 @@ class Card {
   }
 
   _setEventListeners() {
-    // верхнеуровневые стрелочные фунции в объекте не работают в сафари
-
     // кнопка лайк
     this._handleLikeButton = event => {
       event.target.classList.toggle('place__like-btn_on');
