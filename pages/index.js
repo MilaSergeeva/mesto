@@ -1,5 +1,6 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import { Card } from '../scripts/Card.js';
+import { FormValidator } from '../scripts/FormValidator.js';
+import { Section } from '../scripts/Section.js';
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
@@ -13,16 +14,16 @@ import {
   placeNameInput,
   placeLinkInput,
   placeFormAdd,
-  places,
+  placesContainerSelector,
   popupPicView,
   popupCloseBtns,
   placesTemplateElement,
   initialCards,
   formSelector,
-  validationConfig
-} from './constants.js';
+  validationConfig,
+} from '../scripts/constants.js';
 
-const closePopupByEscListener = function(event) {
+const closePopupByEscListener = function (event) {
   if (event.keyCode === 27) {
     const popupOpened = document.querySelector('.popup_opened');
 
@@ -53,7 +54,7 @@ function togglePopupElement(element) {
 }
 
 // закрыть popup при нажатии на зону вне popup
-const closePopupOverlay = function(event) {
+const closePopupOverlay = function (event) {
   const popupElement = event.target;
 
   if (popupElement.classList.contains('popup')) {
@@ -62,7 +63,7 @@ const closePopupOverlay = function(event) {
 };
 
 //Открыть Edit popup, заполнить значениями
-const openPopupEditProfile = function(_event) {
+const openPopupEditProfile = function (_event) {
   nameInput.value = userName.textContent;
   occupationInput.value = userOccupation.textContent;
 
@@ -72,7 +73,7 @@ const openPopupEditProfile = function(_event) {
 };
 
 //Придать новые значения в profile
-const handleEditProfileSubmit = function(event) {
+const handleEditProfileSubmit = function (event) {
   event.preventDefault();
 
   userName.textContent = nameInput.value;
@@ -84,28 +85,40 @@ const handleEditProfileSubmit = function(event) {
 const popupPicViewConfig = {
   closePopupByEscListener,
   togglePopupElement,
-  popupPicView
+  popupPicView,
 };
 
-function addPlace(name, link) {
+// function addPlace(name, link) {
+//   const card = new Card(name, link, placesTemplateElement, popupPicViewConfig);
+//   const renderedPlace = card.renderPlace();
+
+//   placeNameInput.value = '';
+//   placeLinkInput.value = '';
+
+//   placeNameInput.dispatchEvent(new Event('input'));
+
+//   places.prepend(renderedPlace);
+// }
+
+function renderPlace(place) {
+  const { name, link } = place;
   const card = new Card(name, link, placesTemplateElement, popupPicViewConfig);
-  const renderedPlace = card.renderPlace();
 
-  placeNameInput.value = '';
-  placeLinkInput.value = '';
-
-  placeNameInput.dispatchEvent(new Event('input'));
-
-  places.prepend(renderedPlace);
+  return card.renderPlace();
 }
 
-// //создание карточек для всех еллементов массива
-initialCards.reverse().forEach(element => {
-  addPlace(element.name, element.link);
-});
+const cardsSection = new Section(
+  {
+    items: initialCards,
+    renderer: renderPlace,
+  },
+  placesContainerSelector
+);
+
+cardsSection.renderAllItems();
 
 //функция открытия popup add
-const openPopupAddPlace = function(_event) {
+const openPopupAddPlace = function (_event) {
   placeNameInput.value = '';
   placeLinkInput.value = '';
 
@@ -115,12 +128,12 @@ const openPopupAddPlace = function(_event) {
 };
 
 //добавление новой карточки на страницу
-const handleAddPlaceSubmit = function(event) {
+const handleAddPlaceSubmit = function (event) {
   event.preventDefault();
 
   const placeElement = {
     name: placeNameInput.value,
-    link: placeLinkInput.value
+    link: placeLinkInput.value,
   };
 
   addPlace(placeElement.name, placeElement.link);
@@ -144,8 +157,8 @@ profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
 
 //закрытие popup
-popupCloseBtns.forEach(element => {
-  element.addEventListener('click', event => {
+popupCloseBtns.forEach((element) => {
+  element.addEventListener('click', (event) => {
     const popupElement = event.target.closest('.popup');
 
     togglePopupElement(popupElement);
@@ -158,7 +171,7 @@ popupCloseBtns.forEach(element => {
 
 const formList = Array.from(document.querySelectorAll(formSelector));
 
-formList.forEach(formElement => {
+formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationConfig, formElement);
 
   formValidator.enableValidation();

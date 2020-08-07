@@ -17,46 +17,40 @@ const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
 const placeFormAdd = popupAdd.querySelector('.popup__form');
 
 // Картиночки
+const placesContainerSelector = '.places';
 const places = document.querySelector('.places');
 
 const popupPicView = document.querySelector('.popup-pic');
 
 const popupCloseBtns = document.querySelectorAll('.popup__close');
 
-const placesTemplateElement = document.querySelector('.places-template')
-  .content;
+const placesTemplateElement = document.querySelector('.places-template').content;
 
 const initialCards = [
   {
     name: 'Архыз',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
   },
   {
     name: 'Челябинская область',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
   },
   {
     name: 'Иваново',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
   },
   {
     name: 'Камчатка',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
   },
   {
     name: 'Холмогорский район',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
   },
   {
     name: 'Байкал',
-    link:
-      'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+  },
 ];
 
 const formSelector = '.popup__form';
@@ -66,7 +60,7 @@ const validationConfig = {
   submitButtonSelector: '.popup__btn-save',
   inactiveButtonClass: 'popup__btn-save_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
+  errorClass: 'popup__error_visible',
 };
 
 export {
@@ -83,10 +77,11 @@ export {
   placeLinkInput,
   placeFormAdd,
   places,
+  placesContainerSelector,
   popupPicView,
   popupCloseBtns,
   placesTemplateElement,
   initialCards,
   formSelector,
-  validationConfig
+  validationConfig,
 };
