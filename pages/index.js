@@ -3,6 +3,7 @@ import { FormValidator } from '../scripts/FormValidator.js';
 import { Section } from '../scripts/Section.js';
 import { Popup } from '../scripts/Popup.js';
 import { PopupWithImage } from '../scripts/PopupWithImage.js';
+import { UserInfo } from '../scripts/UserInfo.js';
 
 import {
   popupEditOpenBtn,
@@ -135,16 +136,6 @@ popupShowCard.setEventListeners();
 // // submit events
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
-
-//закрытие popup
-// pop;
-// popupCloseBtns.forEach((element) => {
-//   element.addEventListener('click', (event) => {
-//     const popupElement = event.target.closest('.popup');
-
-//     togglePopupElement(popupElement);
-//   });
-// });
 
 // для каждой формы
 // -- создать экземпляр класса FormValidator c передаными в него validation config & формы

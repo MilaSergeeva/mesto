@@ -2,7 +2,6 @@ import { popupCloseBtns } from './constants.js';
 
 class Popup {
   constructor(popupSelector) {
-    console.log(popupSelector);
     this._element = document.querySelector(popupSelector);
     this._closeButtonElement = this._element.querySelector('.popup__close');
 
