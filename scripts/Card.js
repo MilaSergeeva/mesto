@@ -3,8 +3,8 @@ class Card {
     this.name = name;
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
-    this.closePopupByEscListener = popupPicViewConfig.closePopupByEscListener;
-    this.togglePopupElement = popupPicViewConfig.togglePopupElement;
+    // this.closePopupByEscListener = popupPicViewConfig.closePopupByEscListener;
+    // this.togglePopupElement = popupPicViewConfig.togglePopupElement;
     this.popup = popupPicViewConfig.popupPicView;
   }
 
@@ -20,12 +20,12 @@ class Card {
 
   _setEventListeners() {
     // кнопка лайк
-    this._handleLikeButton = event => {
+    this._handleLikeButton = (event) => {
       event.target.classList.toggle('place__like-btn_on');
     };
 
     //удаление карточки
-    this._deleteCard = event => {
+    this._deleteCard = (event) => {
       const place = event.target.closest('.place');
 
       this._removeEventListeners();
@@ -34,13 +34,13 @@ class Card {
     };
 
     //функция открытия popup с просмотром картинки
-    this._openPopupPlacePic = event => {
+    this._openPopupPlacePic = (event) => {
       this.popup.querySelector('.popup-pic__img').src = event.target.src;
       this.popup.querySelector('.popup-pic__title').textContent = event.target.alt;
 
       const popupPicView = this.popup;
 
-      this.togglePopupElement(popupPicView);
+      // this.togglePopupElement(popupPicView);
     };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);

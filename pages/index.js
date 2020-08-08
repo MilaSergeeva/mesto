@@ -1,6 +1,7 @@
 import { Card } from '../scripts/Card.js';
 import { FormValidator } from '../scripts/FormValidator.js';
 import { Section } from '../scripts/Section.js';
+import { Popup } from '../scripts/Popup.js';
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
@@ -23,44 +24,49 @@ import {
   validationConfig,
 } from '../scripts/constants.js';
 
-const closePopupByEscListener = function (event) {
-  if (event.keyCode === 27) {
-    const popupOpened = document.querySelector('.popup_opened');
+const popupEditProfile = new Popup('.popup_edit');
+const popupAddCard = new Popup('.popup_add');
+const popupCard = new Popup('.popup-pic');
 
-    if (popupOpened) {
-      togglePopupClass(popupOpened);
-    }
-  }
-};
+// const closePopupByEscListener = function (event) {
+//   if (event.keyCode === 27) {
+//     const popupOpened = document.querySelector('.popup_opened');
 
-//Переключатель класса popup_opened
-function togglePopupClass(element) {
-  element.classList.toggle('popup_opened');
-}
+//     if (popupOpened) {
+//       togglePopupClass(popupOpened);
+//     }
+//   }
+// };
 
-// назначения слушателя по ESC
-function toggleEscEventListener(element) {
-  if (element.classList.contains('popup_opened')) {
-    document.addEventListener('keydown', closePopupByEscListener);
-  } else {
-    document.removeEventListener('keydown', closePopupByEscListener);
-  }
-}
+// //Переключатель класса popup_opened
+// function togglePopupClass(element) {
+//   element.classList.toggle('popup_opened');
+// }
 
-function togglePopupElement(element) {
-  togglePopupClass(element);
+// // назначения слушателя по ESC
+// function toggleEscEventListener(element) {
+//   if (element.classList.contains('popup_opened')) {
+//     document.addEventListener('keydown', closePopupByEscListener);
+//   } else {
+//     document.removeEventListener('keydown', closePopupByEscListener);
+//   }
+// }
 
-  toggleEscEventListener(element);
-}
+// function togglePopupElement(element) {
+//   togglePopupClass(element);
+
+//   toggleEscEventListener(element);
+// }
 
 // закрыть popup при нажатии на зону вне popup
-const closePopupOverlay = function (event) {
-  const popupElement = event.target;
+// const closePopupOverlay = function (event) {
+//   const popupElement = event.target;
 
-  if (popupElement.classList.contains('popup')) {
-    togglePopupElement(popupElement);
-  }
-};
+//   if (popupElement.classList.contains('popup')) {
+//     popup.closePopup();
+//     // togglePopupElement(popupElement);
+//   }
+// };
 
 //Открыть Edit popup, заполнить значениями
 const openPopupEditProfile = function (_event) {
@@ -69,7 +75,8 @@ const openPopupEditProfile = function (_event) {
 
   nameInput.dispatchEvent(new Event('input'));
 
-  togglePopupElement(popupEdit);
+  popupEditProfile.openPopup();
+  // togglePopupElement(popupEdit);
 };
 
 //Придать новые значения в profile
@@ -79,12 +86,13 @@ const handleEditProfileSubmit = function (event) {
   userName.textContent = nameInput.value;
   userOccupation.textContent = occupationInput.value;
 
-  togglePopupElement(popupEdit);
+  popupEditProfile.closePopup();
+  // togglePopupElement(popupEdit);
 };
 
 const popupPicViewConfig = {
-  closePopupByEscListener,
-  togglePopupElement,
+  // closePopupByEscListener,
+  // togglePopupElement,
   popupPicView,
 };
 
@@ -107,6 +115,7 @@ function renderPlace(place) {
   return card.renderPlace();
 }
 
+//инициализаыия класса Section
 const cardsSection = new Section(
   {
     items: initialCards,
@@ -124,7 +133,8 @@ const openPopupAddPlace = function (_event) {
 
   placeNameInput.dispatchEvent(new Event('input'));
 
-  togglePopupElement(popupAdd);
+  popupAddCard.openPopup();
+  // togglePopupElement(popupAdd);
 };
 
 //добавление новой карточки на страницу
@@ -138,32 +148,36 @@ const handleAddPlaceSubmit = function (event) {
 
   addPlace(placeElement.name, placeElement.link);
 
-  togglePopupElement(popupAdd);
+  popupAddCard.closePopup();
+  // togglePopupElement(popupAdd);
 };
 
 //закрытие просмотра картинки
-popupPicView.addEventListener('click', closePopupOverlay);
+// popupPicView.addEventListener('click', closePopupOverlay);
 
 // bind toggle to popups
 popupEditOpenBtn.addEventListener('click', openPopupEditProfile);
 popupAddOpenBtn.addEventListener('click', openPopupAddPlace);
 
 // // close on overlay click
-popupEdit.addEventListener('click', closePopupOverlay);
-popupAdd.addEventListener('click', closePopupOverlay);
+popupEditProfile.setEventListeners();
+popupAddCard.setEventListeners();
+// popupEdit.addEventListener('click', closePopupOverlay);
+// popupAdd.addEventListener('click', closePopupOverlay);
 
 // // submit events
 profileFormEdit.addEventListener('submit', handleEditProfileSubmit);
 placeFormAdd.addEventListener('submit', handleAddPlaceSubmit);
 
 //закрытие popup
-popupCloseBtns.forEach((element) => {
-  element.addEventListener('click', (event) => {
-    const popupElement = event.target.closest('.popup');
+// pop;
+// popupCloseBtns.forEach((element) => {
+//   element.addEventListener('click', (event) => {
+//     const popupElement = event.target.closest('.popup');
 
-    togglePopupElement(popupElement);
-  });
-});
+//     togglePopupElement(popupElement);
+//   });
+// });
 
 // для каждой формы
 // -- создать экземпляр класса FormValidator c передаными в него validation config & формы
