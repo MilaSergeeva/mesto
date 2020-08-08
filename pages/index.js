@@ -2,6 +2,8 @@ import { Card } from '../scripts/Card.js';
 import { FormValidator } from '../scripts/FormValidator.js';
 import { Section } from '../scripts/Section.js';
 import { Popup } from '../scripts/Popup.js';
+import { PopupWithImage } from '../scripts/PopupWithImage.js';
+
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
@@ -26,7 +28,7 @@ import {
 
 const popupEditProfile = new Popup('.popup_edit');
 const popupAddCard = new Popup('.popup_add');
-const popupCard = new Popup('.popup-pic');
+const popupShowCard = new PopupWithImage('.popup-pic');
 
 // const closePopupByEscListener = function (event) {
 //   if (event.keyCode === 27) {
@@ -162,6 +164,7 @@ popupAddOpenBtn.addEventListener('click', openPopupAddPlace);
 // // close on overlay click
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
+popupShowCard.setEventListeners();
 // popupEdit.addEventListener('click', closePopupOverlay);
 // popupAdd.addEventListener('click', closePopupOverlay);
 
