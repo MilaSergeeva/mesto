@@ -9,10 +9,10 @@ class PopupWithImage extends Popup {
   }
 
   openPopup(name, link) {
-    super.openPopup();
-
     this._cardImg.src = link;
     this._cardTitle.textContent = name;
+
+    super.openPopup();
   }
 }
 

@@ -1,11 +1,12 @@
 class Card {
-  constructor(name, link, placesTemplateElement, popupPicViewConfig) {
+  constructor(name, link, placesTemplateElement, popupPicViewConfig, handleCardClick) {
     this.name = name;
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
     // this.closePopupByEscListener = popupPicViewConfig.closePopupByEscListener;
     // this.togglePopupElement = popupPicViewConfig.togglePopupElement;
     this.popup = popupPicViewConfig.popupPicView;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -35,12 +36,10 @@ class Card {
 
     //функция открытия popup с просмотром картинки
     this._openPopupPlacePic = (event) => {
-      this.popup.querySelector('.popup-pic__img').src = event.target.src;
-      this.popup.querySelector('.popup-pic__title').textContent = event.target.alt;
+      const link = event.target.src;
+      const name = event.target.alt;
 
-      const popupPicView = this.popup;
-
-      // this.togglePopupElement(popupPicView);
+      this._handleCardClick(link, name);
     };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);
