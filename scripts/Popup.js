@@ -1,5 +1,3 @@
-import { popupCloseBtns } from './constants.js';
-
 class Popup {
   constructor(popupSelector) {
     this._element = document.querySelector(popupSelector);
@@ -18,9 +16,8 @@ class Popup {
     };
 
     this._handleOverlayClose = (event) => {
-      if (this._element.classList.contains('popup')) {
+      if (this._element === event.target && this._element.classList.contains('popup')) {
         this.closePopup();
-        // togglePopupElement(popupElement);
       }
     };
   }

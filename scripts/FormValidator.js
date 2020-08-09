@@ -37,9 +37,9 @@ class FormValidator {
     const inputList = Array.from(this.formElement.querySelectorAll(this.validationConfig.inputSelector));
     const buttonElement = this.formElement.querySelector(this.validationConfig.submitButtonSelector);
 
-    inputList.forEach(inputElement => {
+    inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        inputList.forEach(input => {
+        inputList.forEach((input) => {
           this._checkInputValidity(input);
         });
 
@@ -52,7 +52,7 @@ class FormValidator {
 
   //наличие не валидных данных
   _hasInvalidInput(inputList) {
-    return inputList.some(inputElement => {
+    return inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }

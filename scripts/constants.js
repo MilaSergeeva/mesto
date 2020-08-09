@@ -54,6 +54,7 @@ const initialCards = [
 ];
 
 const formSelector = '.popup__form';
+const formInputSelector = '.popup__input';
 
 const validationConfig = {
   inputSelector: '.popup__input',
@@ -83,5 +84,6 @@ export {
   placesTemplateElement,
   initialCards,
   formSelector,
+  formInputSelector,
   validationConfig,
 };
