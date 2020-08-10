@@ -36,17 +36,7 @@ const openPopupEditProfile = () => {
   popupEditProfile.openPopup();
 };
 
-//Открыть Edit popup, заполнить значениями
-// const openPopupEditProfile = function (_event) {
-//   nameInput.value = userName.textContent;
-//   occupationInput.value = userOccupation.textContent;
-
-//   nameInput.dispatchEvent(new Event('input'));
-
-//   popupEditProfile.openPopup();
-// };
-
-// //Придать новые значения в profile
+//Придать новые значения в profile
 const handleEditProfileSubmit = function (formData) {
   const userInfo = {
     userName: formData['user-name'],
@@ -62,6 +52,7 @@ const popupPicViewConfig = {
   popupPicView,
 };
 
+//функция открытия popup с карточкой
 function handleCardClick(link, name) {
   popupShowCard.openPopup(name, link);
 }
@@ -73,11 +64,18 @@ function renderPlace(place) {
   return card.renderPlace();
 }
 
+//рендер и добавоение карточки
+function renderAndAddPlace(place) {
+  const renderedPlace = renderPlace(place);
+
+  this.addItem(renderedPlace);
+}
+
 //инициализаыия класса Section
 const cardsSection = new Section(
   {
     items: initialCards.reverse(),
-    renderer: renderPlace,
+    renderer: renderAndAddPlace,
   },
   placesContainerSelector
 );
@@ -101,7 +99,9 @@ const handleAddPlaceSubmit = (formData) => {
     link: formData['place-link'],
   };
 
-  cardsSection.addItem(renderPlace(placeElement));
+  const boundRendered = renderAndAddPlace.bind(cardsSection);
+
+  boundRendered(placeElement);
 
   popupAddCard.closePopup();
   placeNameInput.dispatchEvent(new Event('input'));
