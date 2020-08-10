@@ -3,8 +3,6 @@ class Card {
     this.name = name;
     this.link = link;
     this.placesTemplateElement = placesTemplateElement;
-    // this.closePopupByEscListener = popupPicViewConfig.closePopupByEscListener;
-    // this.togglePopupElement = popupPicViewConfig.togglePopupElement;
     this.popup = popupPicViewConfig.popupPicView;
     this._handleCardClick = handleCardClick;
   }

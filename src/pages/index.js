@@ -1,3 +1,4 @@
+import './index.css'; // добавьте импорт главного файла стилей
 import { Card } from '../scripts/Card.js';
 import { FormValidator } from '../scripts/FormValidator.js';
 import { Section } from '../scripts/Section.js';
@@ -86,16 +87,6 @@ const handleAddPlaceSubmit = (event) => {
     link: placeLinkInput.value,
   };
 
-  // const newCard = new Card(
-  //   placeElement.name,
-  //   placeElement.link,
-  //   placesTemplateElement,
-  //   popupPicViewConfig,
-  //   handleCardClick
-  // );
-
-  // cardsSection.addItem(newCard.renderPlace());
-
   cardsSection.addItem(renderPlace(placeElement));
 
   popupAddCard.closePopup();
@@ -122,7 +113,7 @@ const popupEditProfile = new PopupWithForm('.popup_edit', handleEditProfileSubmi
 const popupAddCard = new PopupWithForm('.popup_add', handleAddPlaceSubmit);
 const popupShowCard = new PopupWithImage('.popup-pic');
 
-//
+//устанавливаем слушатели
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupShowCard.setEventListeners();
