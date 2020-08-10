@@ -3,10 +3,12 @@ const popupAddOpenBtn = document.querySelector('.profile__add-button'); //доб
 
 // edit user popup
 const popupEdit = document.querySelector('.popup_edit');
-const userName = document.querySelector('.profile-info__name');
-const userOccupation = document.querySelector('.profile-info__occupation');
+// const userName = document.querySelector('.profile-info__name');
+// const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
+const userNameSelector = '.profile-info__name';
+const userOccupationSelector = '.profile-info__occupation';
 
 // add place popup
 const popupAdd = document.querySelector('.popup_add');
@@ -63,8 +65,8 @@ export {
   popupEditOpenBtn,
   popupAddOpenBtn,
   popupEdit,
-  userName,
-  userOccupation,
+  userNameSelector,
+  userOccupationSelector,
   nameInput,
   occupationInput,
   popupAdd,

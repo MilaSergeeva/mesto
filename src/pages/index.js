@@ -1,15 +1,16 @@
 import './index.css'; // добавьте импорт главного файла стилей
-import { Card } from '../scripts/Card.js';
-import { FormValidator } from '../scripts/FormValidator.js';
-import { Section } from '../scripts/Section.js';
-import { PopupWithImage } from '../scripts/PopupWithImage.js';
-import { PopupWithForm } from '../scripts/PopupWithForm.js';
+import { Card } from '../components /Card.js';
+import { FormValidator } from '../components /FormValidator.js';
+import { Section } from '../components /Section.js';
+import { PopupWithImage } from '../components /PopupWithImage.js';
+import { PopupWithForm } from '../components /PopupWithForm.js';
+import { UserInfo } from '../components /UserInfo.js';
 
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
-  userName,
-  userOccupation,
+  userNameSelector,
+  userOccupationSelector,
   nameInput,
   occupationInput,
   placeNameInput,
@@ -20,24 +21,39 @@ import {
   initialCards,
   formSelector,
   validationConfig,
-} from '../scripts/constants.js';
+} from '../utils/constants.js';
 
-//Открыть Edit popup, заполнить значениями
-const openPopupEditProfile = function (_event) {
-  nameInput.value = userName.textContent;
-  occupationInput.value = userOccupation.textContent;
+const userProfileInfo = new UserInfo(userNameSelector, userOccupationSelector);
+
+const openPopupEditProfile = () => {
+  const userData = userProfileInfo.getUserInfo();
+
+  nameInput.value = userData.userName;
+  occupationInput.value = userData.userOccupation;
 
   nameInput.dispatchEvent(new Event('input'));
 
   popupEditProfile.openPopup();
 };
 
-//Придать новые значения в profile
-const handleEditProfileSubmit = function (event) {
-  event.preventDefault();
+//Открыть Edit popup, заполнить значениями
+// const openPopupEditProfile = function (_event) {
+//   nameInput.value = userName.textContent;
+//   occupationInput.value = userOccupation.textContent;
 
-  userName.textContent = nameInput.value;
-  userOccupation.textContent = occupationInput.value;
+//   nameInput.dispatchEvent(new Event('input'));
+
+//   popupEditProfile.openPopup();
+// };
+
+// //Придать новые значения в profile
+const handleEditProfileSubmit = function (formData) {
+  const userInfo = {
+    userName: formData['user-name'],
+    userOccupation: formData['user-occupation'],
+  };
+
+  userProfileInfo.setUserInfo(userInfo);
 
   popupEditProfile.closePopup();
 };
@@ -79,12 +95,10 @@ const openPopupAddPlace = function (_event) {
 };
 
 //добавление новой карточки на страницу
-const handleAddPlaceSubmit = (event) => {
-  event.preventDefault();
-
+const handleAddPlaceSubmit = (formData) => {
   const placeElement = {
-    name: placeNameInput.value,
-    link: placeLinkInput.value,
+    name: formData['place-name'],
+    link: formData['place-link'],
   };
 
   cardsSection.addItem(renderPlace(placeElement));
