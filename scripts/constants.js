@@ -7,14 +7,14 @@ const userName = document.querySelector('.profile-info__name');
 const userOccupation = document.querySelector('.profile-info__occupation');
 const nameInput = document.querySelector('input[name="user-name"]');
 const occupationInput = document.querySelector('input[name="user-occupation"]');
-const profileFormEdit = popupEdit.querySelector('.popup__form');
+// const profileFormEdit = popupEdit.querySelector('.popup__form');
 
 // add place popup
 const popupAdd = document.querySelector('.popup_add');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
-//const savePlaceButton = popupAdd.querySelector('button[type="submit"]');
-const placeFormAdd = popupAdd.querySelector('.popup__form');
+// const savePlaceButton = popupAdd.querySelector('button[type="submit"]');
+// const placeFormAdd = popupAdd.querySelector('.popup__form');
 
 // Картиночки
 const placesContainerSelector = '.places';
@@ -22,7 +22,7 @@ const places = document.querySelector('.places');
 
 const popupPicView = document.querySelector('.popup-pic');
 
-const popupCloseBtns = document.querySelectorAll('.popup__close');
+// const popupCloseBtns = document.querySelectorAll('.popup__close');
 
 const placesTemplateElement = document.querySelector('.places-template').content;
 
@@ -72,15 +72,15 @@ export {
   userOccupation,
   nameInput,
   occupationInput,
-  profileFormEdit,
+  // profileFormEdit,
   popupAdd,
   placeNameInput,
   placeLinkInput,
-  placeFormAdd,
+  // placeFormAdd,
   places,
   placesContainerSelector,
   popupPicView,
-  popupCloseBtns,
+  // popupCloseBtns,
   placesTemplateElement,
   initialCards,
   formSelector,

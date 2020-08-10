@@ -86,15 +86,17 @@ const handleAddPlaceSubmit = (event) => {
     link: placeLinkInput.value,
   };
 
-  const newCard = new Card(
-    placeElement.name,
-    placeElement.link,
-    placesTemplateElement,
-    popupPicViewConfig,
-    handleCardClick
-  );
+  // const newCard = new Card(
+  //   placeElement.name,
+  //   placeElement.link,
+  //   placesTemplateElement,
+  //   popupPicViewConfig,
+  //   handleCardClick
+  // );
 
-  cardsSection.addItem(newCard.renderPlace());
+  // cardsSection.addItem(newCard.renderPlace());
+
+  cardsSection.addItem(renderPlace(placeElement));
 
   popupAddCard.closePopup();
   placeNameInput.dispatchEvent(new Event('input'));
