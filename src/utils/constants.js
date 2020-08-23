@@ -14,7 +14,6 @@ const userAvatarSelector = '.profile__avatar';
 
 // add place popup
 const popupAdd = document.querySelector('.popup_add');
-const popupWithConfirmation = document.querySelector('.popup-card-del');
 const placeNameInput = popupAdd.querySelector('input[name="place-name"]');
 const placeLinkInput = popupAdd.querySelector('input[name="place-link"]');
 const avatarLinkInput = document.querySelector('.popup__input-container');
@@ -43,7 +42,6 @@ export {
   popupAddOpenBtn,
   editAvatarBtn,
   popupEdit,
-  popupWithConfirmation,
   userNameSelector,
   userOccupationSelector,
   userAvatarSelector,

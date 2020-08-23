@@ -1,18 +1,17 @@
 import './index.css'; // добавьте импорт главного файла стилей
-import { Api } from '../components /Api.js';
-import { Card } from '../components /Card.js';
-import { FormValidator } from '../components /FormValidator.js';
-import { Section } from '../components /Section.js';
-import { PopupWithImage } from '../components /PopupWithImage.js';
-import { PopupWithForm } from '../components /PopupWithForm.js';
-import { UserInfo } from '../components /UserInfo.js';
-import { PopupWithConfirm } from '../components /PopupWithConfirm.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { PopupWithConfirm } from '../components/PopupWithConfirm.js';
+import { api } from '../utils/api/index.js';
 
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
   editAvatarBtn,
-  popupWithConfirmation,
   userNameSelector,
   userOccupationSelector,
   userAvatarSelector,
@@ -22,21 +21,10 @@ import {
   placeLinkInput,
   avatarLinkInput,
   placesContainerSelector,
-  popupPicView,
   placesTemplateElement,
   formSelector,
   validationConfig,
 } from '../utils/constants.js';
-import { length } from 'file-loader';
-
-// rename to yandexCogortaApi
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-  headers: {
-    authorization: 'cfdee319-1eac-4a79-8e55-692d828c875e',
-    'Content-Type': 'application/json',
-  },
-});
 
 const openPopupEditProfile = () => {
   const userData = userProfileInfo.getUserInfo();
@@ -63,10 +51,6 @@ const handleEditProfileSubmit = function (formData) {
   });
 };
 
-const popupPicViewConfig = {
-  popupPicView,
-};
-
 //функция открытия popup с карточкой
 function handleCardClick(link, name) {
   popupShowCard.openPopup(name, link);
@@ -74,15 +58,7 @@ function handleCardClick(link, name) {
 
 function renderPlace(place) {
   const userInfo = userProfileInfo.getUserInfo();
-  const card = new Card(
-    place,
-    userInfo,
-    api,
-    placesTemplateElement,
-    popupPicViewConfig,
-    handleCardClick,
-    popupWithConfirm
-  );
+  const card = new Card(place, userInfo, placesTemplateElement, popupWithConfirm, handleCardClick);
 
   return card.render();
 }

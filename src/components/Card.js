@@ -1,19 +1,12 @@
+import { api } from '../utils/api';
+
 class Card {
-  constructor(
-    place,
-    currentUserInfo,
-    api,
-    placesTemplateElement,
-    popupPicViewConfig,
-    handleCardClick,
-    popupWithConfirm
-  ) {
+  constructor(place, currentUserInfo, placesTemplateElement, popupWithConfirm, handleCardClick) {
     this.place = place;
     this.currentUserInfo = currentUserInfo;
-    this.api = api;
     this.placesTemplateElement = placesTemplateElement;
-    this.popup = popupPicViewConfig.popupPicView;
     this._handleCardClick = handleCardClick;
+
     this.popupWithConfirm = popupWithConfirm;
   }
 
@@ -33,14 +26,14 @@ class Card {
       if (event.target.classList.contains('place__like-btn_on')) {
         this.api.deleteLikeCard(this.place._id).then((cardInfo) => {
           event.target.classList.toggle('place__like-btn_on');
+
           this.likesCounter.textContent = cardInfo.likes.length;
-          console.log(cardInfo);
         });
       } else {
         this.api.likeCard(this.place._id).then((cardInfo) => {
           event.target.classList.toggle('place__like-btn_on');
+
           this.likesCounter.textContent = cardInfo.likes.length;
-          console.log(cardInfo);
         });
       }
     };
