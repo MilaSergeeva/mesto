@@ -1,17 +1,11 @@
+import qs from 'querystring';
+
 class Api {
   constructor({ baseUrl, headers }) {
     //options
     this.baseUrl = baseUrl;
     this.headers = headers;
   }
-
-  // метод который будет принимать параметры: эндпоинт, хттп метод (гет пост), параметры
-  // и формировать посылку на него запроса и возврщать респонс
-
-  // 'https://mesto.nomoreparties.co/v1/cohort-14/cards'
-
-  // https://mesto.nomoreparties.co/v1 base url
-  // cohort-14/cards
 
   makeRequest(endpoint, httpMethod, payload) {
     let url = `${this.baseUrl}/${endpoint}`;
@@ -24,7 +18,7 @@ class Api {
     if (payload !== undefined && ['POST', 'PUT', 'PATCH'].includes(httpMethod)) {
       options.body = JSON.stringify(payload);
     } else if (payload !== undefined) {
-      //const url=`${url}?${qs.encode(params)}`
+      const url = `${url}?${qs.encode(payload)}`;
     }
 
     return fetch(url, options).then((res) => {

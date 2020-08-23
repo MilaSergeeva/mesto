@@ -156,10 +156,17 @@ const cardsSection = new Section(
   placesContainerSelector
 );
 
-api.getUserInfo().then((userInfo) => {
-  userProfileInfo.setUserInfo(userInfo);
+// api.getUserInfo().then((userInfo) => {
+//   userProfileInfo.setUserInfo(userInfo);
+//   api.getInitialCards().then((items) => {
+//     cardsSection.renderAllItems(items);
+//   });
+// });
 
-  api.getInitialCards().then((items) => {
-    cardsSection.renderAllItems(items);
-  });
+Promise.all([api.getUserInfo(), api.getInitialCards()]).then((res) => {
+  const userInfo = res[0];
+  const items = res[1];
+
+  userProfileInfo.setUserInfo(userInfo);
+  cardsSection.renderAllItems(items);
 });
