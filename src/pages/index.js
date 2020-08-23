@@ -74,7 +74,15 @@ function handleCardClick(link, name) {
 
 function renderPlace(place) {
   const userInfo = userProfileInfo.getUserInfo();
-  const card = new Card(place, userInfo, api, placesTemplateElement, popupPicViewConfig, handleCardClick);
+  const card = new Card(
+    place,
+    userInfo,
+    api,
+    placesTemplateElement,
+    popupPicViewConfig,
+    handleCardClick,
+    popupWithConfirm
+  );
 
   return card.render();
 }

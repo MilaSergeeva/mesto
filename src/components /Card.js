@@ -1,12 +1,20 @@
 class Card {
-  constructor(place, currentUserInfo, api, placesTemplateElement, popupPicViewConfig, handleCardClick) {
+  constructor(
+    place,
+    currentUserInfo,
+    api,
+    placesTemplateElement,
+    popupPicViewConfig,
+    handleCardClick,
+    popupWithConfirm
+  ) {
     this.place = place;
     this.currentUserInfo = currentUserInfo;
     this.api = api;
     this.placesTemplateElement = placesTemplateElement;
     this.popup = popupPicViewConfig.popupPicView;
     this._handleCardClick = handleCardClick;
-    this.authorId = null;
+    this.popupWithConfirm = popupWithConfirm;
   }
 
   _getTemplate() {
@@ -15,7 +23,7 @@ class Card {
 
   _removeEventListeners() {
     this.imageElement.removeEventListener('click', this._openPopupPlacePic);
-    this.deleteElement.removeEventListener('click', this._deleteCard);
+    this.deleteElement.removeEventListener('click', this._confirmDeleteCard);
     this.likeElement.removeEventListener('click', this._handleLikeButton);
   }
 
@@ -43,15 +51,18 @@ class Card {
     //event.target.classList.toggle('place__like-btn_on');
 
     //удаление карточки
-    this._deleteCard = (event) => {
-      this.api.deleteCard(this.place._id).then(() => {
-        const place = event.target.closest('.place');
+    this._confirmDeleteCard = (event) => {
+      this.popupWithConfirm.setOnPopupConfirm(() => {
+        this.api.deleteCard(this.place._id).then(() => {
+          const place = event.target.closest('.place');
 
-        this._removeEventListeners();
+          this._removeEventListeners();
 
-        place.remove();
+          place.remove();
+        });
       });
-      console.log(this.place._id);
+
+      this.popupWithConfirm.openPopup();
     };
 
     //функция открытия popup с просмотром картинки
@@ -63,7 +74,7 @@ class Card {
     };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);
-    this.deleteElement.addEventListener('click', this._deleteCard);
+    this.deleteElement.addEventListener('click', this._confirmDeleteCard);
     this.likeElement.addEventListener('click', this._handleLikeButton);
   }
 
