@@ -133,32 +133,18 @@ formList.forEach((formElement) => {
   formValidator.enableValidation();
 });
 
+// init popups
 const popupEditProfile = new PopupWithForm('.popup_edit', handleEditProfileSubmit);
 const popupAddCard = new PopupWithForm('.popup_add', handleAddPlaceSubmit);
 const popupShowCard = new PopupWithImage('.popup-pic');
 const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', handleEditAvatarSubmit);
 const popupWithConfirm = new PopupWithConfirm('.popup-card-del');
 
-//устанавливаем слушатели
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupShowCard.setEventListeners();
 popupEditAvatar.setEventListeners();
 popupWithConfirm.setEventListeners();
-
-//добовоение счетчика лайков (стили )
-
-// const likeCounter = document.querySelector('.place__likes-counter');
-// likeCounter.style.display = 'block';
-
-// const likeBtn = document.querySelector('.place__like-btn');
-// likeBtn.style = 'grid-row: 1/2';
-
-// updateCardHandler() {
-//   const cardPayload = {
-//     name : '123',
-//     link: '123',
-//   }
 
 const userProfileInfo = new UserInfo(userNameSelector, userOccupationSelector, userAvatarSelector);
 

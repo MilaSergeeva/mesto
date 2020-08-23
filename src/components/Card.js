@@ -38,11 +38,6 @@ class Card {
       }
     };
 
-    //когда лайкаем в свойстро лайкс объекта карточки добовляем
-    // объект с данными пользователя
-
-    //event.target.classList.toggle('place__like-btn_on');
-
     //удаление карточки
     this._confirmDeleteCard = (event) => {
       this.popupWithConfirm.setOnPopupConfirm(() => {
