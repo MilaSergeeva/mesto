@@ -1,10 +1,12 @@
 class Card {
-  constructor(name, link, placesTemplateElement, popupPicViewConfig, handleCardClick) {
-    this.name = name;
-    this.link = link;
+  constructor(place, currentUserInfo, api, placesTemplateElement, popupPicViewConfig, handleCardClick) {
+    this.place = place;
+    this.currentUserInfo = currentUserInfo;
+    this.api = api;
     this.placesTemplateElement = placesTemplateElement;
     this.popup = popupPicViewConfig.popupPicView;
     this._handleCardClick = handleCardClick;
+    this.authorId = null;
   }
 
   _getTemplate() {
@@ -20,16 +22,36 @@ class Card {
   _setEventListeners() {
     // кнопка лайк
     this._handleLikeButton = (event) => {
-      event.target.classList.toggle('place__like-btn_on');
+      if (event.target.classList.contains('place__like-btn_on')) {
+        this.api.deleteLikeCard(this.place._id).then((cardInfo) => {
+          event.target.classList.toggle('place__like-btn_on');
+          this.likesCounter.textContent = cardInfo.likes.length;
+          console.log(cardInfo);
+        });
+      } else {
+        this.api.likeCard(this.place._id).then((cardInfo) => {
+          event.target.classList.toggle('place__like-btn_on');
+          this.likesCounter.textContent = cardInfo.likes.length;
+          console.log(cardInfo);
+        });
+      }
     };
+
+    //когда лайкаем в свойстро лайкс объекта карточки добовляем
+    // объект с данными пользователя
+
+    //event.target.classList.toggle('place__like-btn_on');
 
     //удаление карточки
     this._deleteCard = (event) => {
-      const place = event.target.closest('.place');
+      this.api.deleteCard(this.place._id).then(() => {
+        const place = event.target.closest('.place');
 
-      this._removeEventListeners();
+        this._removeEventListeners();
 
-      place.remove();
+        place.remove();
+      });
+      console.log(this.place._id);
     };
 
     //функция открытия popup с просмотром картинки
@@ -46,21 +68,37 @@ class Card {
   }
 
   //рендер карточки места
-  renderPlace() {
-    this.place = this._getTemplate();
+  render() {
+    this.placeElement = this._getTemplate();
 
-    this.place.querySelector('.place__title').textContent = this.name;
+    this.likesCounter = this.placeElement.querySelector('.place__likes-counter');
+    this.imageElement = this.placeElement.querySelector('.place__img');
+    this.likeElement = this.placeElement.querySelector('.place__like-btn');
+    this.deleteElement = this.placeElement.querySelector('.place__bin-btn');
+    this.titleElement = this.placeElement.querySelector('.place__title');
 
-    this.imageElement = this.place.querySelector('.place__img');
-    this.likeElement = this.place.querySelector('.place__like-btn');
-    this.deleteElement = this.place.querySelector('.place__bin-btn');
+    this.titleElement.textContent = this.place.name;
+    this.likesCounter.textContent = this.place.likes.length;
+    //если в списке  лаков  есть лайк пользователя
 
-    this.imageElement.src = this.link;
-    this.imageElement.alt = this.name;
+    if (
+      this.place.likes.find((element) => {
+        return element._id === this.currentUserInfo._id;
+      })
+    ) {
+      this.likeElement.classList.add('place__like-btn_on');
+    }
+
+    if (this.place.owner._id != this.currentUserInfo._id) {
+      this.deleteElement.remove();
+    }
+
+    this.imageElement.src = this.place.link;
+    this.imageElement.alt = this.place.name;
 
     this._setEventListeners();
 
-    return this.place;
+    return this.placeElement;
   }
 }
 

@@ -1,35 +1,48 @@
 import './index.css'; // добавьте импорт главного файла стилей
+import { Api } from '../components /Api.js';
 import { Card } from '../components /Card.js';
 import { FormValidator } from '../components /FormValidator.js';
 import { Section } from '../components /Section.js';
 import { PopupWithImage } from '../components /PopupWithImage.js';
 import { PopupWithForm } from '../components /PopupWithForm.js';
 import { UserInfo } from '../components /UserInfo.js';
+import { PopupWithConfirm } from '../components /PopupWithConfirm.js';
 
 import {
   popupEditOpenBtn,
   popupAddOpenBtn,
+  editAvatarBtn,
+  popupWithConfirmation,
   userNameSelector,
   userOccupationSelector,
+  userAvatarSelector,
   nameInput,
   occupationInput,
   placeNameInput,
   placeLinkInput,
+  avatarLinkInput,
   placesContainerSelector,
   popupPicView,
   placesTemplateElement,
-  initialCards,
   formSelector,
   validationConfig,
 } from '../utils/constants.js';
+import { length } from 'file-loader';
 
-const userProfileInfo = new UserInfo(userNameSelector, userOccupationSelector);
+// rename to yandexCogortaApi
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  headers: {
+    authorization: 'cfdee319-1eac-4a79-8e55-692d828c875e',
+    'Content-Type': 'application/json',
+  },
+});
 
 const openPopupEditProfile = () => {
   const userData = userProfileInfo.getUserInfo();
 
-  nameInput.value = userData.userName;
-  occupationInput.value = userData.userOccupation;
+  nameInput.value = userData.name;
+  occupationInput.value = userData.about;
 
   nameInput.dispatchEvent(new Event('input'));
 
@@ -39,13 +52,15 @@ const openPopupEditProfile = () => {
 //Придать новые значения в profile
 const handleEditProfileSubmit = function (formData) {
   const userInfo = {
-    userName: formData['user-name'],
-    userOccupation: formData['user-occupation'],
+    name: formData['user-name'],
+    about: formData['user-occupation'],
   };
 
-  userProfileInfo.setUserInfo(userInfo);
+  api.updateUserInfo(userInfo).then((updatedUserInfo) => {
+    userProfileInfo.setUserInfo(updatedUserInfo);
 
-  popupEditProfile.closePopup();
+    popupEditProfile.closePopup();
+  });
 };
 
 const popupPicViewConfig = {
@@ -58,29 +73,17 @@ function handleCardClick(link, name) {
 }
 
 function renderPlace(place) {
-  const { name, link } = place;
-  const card = new Card(name, link, placesTemplateElement, popupPicViewConfig, handleCardClick);
+  const userInfo = userProfileInfo.getUserInfo();
+  const card = new Card(place, userInfo, api, placesTemplateElement, popupPicViewConfig, handleCardClick);
 
-  return card.renderPlace();
+  return card.render();
 }
 
 //рендер и добавоение карточки
 function renderAndAddPlace(place) {
   const renderedPlace = renderPlace(place);
-
   this.addItem(renderedPlace);
 }
-
-//инициализаыия класса Section
-const cardsSection = new Section(
-  {
-    items: initialCards.reverse(),
-    renderer: renderAndAddPlace,
-  },
-  placesContainerSelector
-);
-
-cardsSection.renderAllItems();
 
 //функция открытия popup add
 const openPopupAddPlace = function (_event) {
@@ -92,24 +95,47 @@ const openPopupAddPlace = function (_event) {
   popupAddCard.openPopup();
 };
 
+//функция открытия popup edit avatar
+const openPopupEditAvatar = function (_event) {
+  avatarLinkInput.value = '';
+
+  avatarLinkInput.dispatchEvent(new Event('input'));
+
+  popupEditAvatar.openPopup();
+};
+
 //добавление новой карточки на страницу
 const handleAddPlaceSubmit = (formData) => {
-  const placeElement = {
+  const placePayload = {
     name: formData['place-name'],
     link: formData['place-link'],
   };
 
-  const boundRendered = renderAndAddPlace.bind(cardsSection);
+  api.postCard(placePayload).then((data) => {
+    const boundRendered = renderAndAddPlace.bind(cardsSection);
 
-  boundRendered(placeElement);
+    boundRendered(data);
 
-  popupAddCard.closePopup();
-  placeNameInput.dispatchEvent(new Event('input'));
+    popupAddCard.closePopup();
+    placeNameInput.dispatchEvent(new Event('input'));
+  });
+};
+
+const handleEditAvatarSubmit = (formData) => {
+  const userInfo = {
+    avatar: formData['avatar-link'],
+  };
+
+  api.updateAvatar(userInfo).then((updatedUserInfo) => {
+    userProfileInfo.setUserInfo(updatedUserInfo);
+  });
+  popupEditAvatar.closePopup();
 };
 
 // bind toggle to popups
 popupEditOpenBtn.addEventListener('click', openPopupEditProfile);
 popupAddOpenBtn.addEventListener('click', openPopupAddPlace);
+editAvatarBtn.addEventListener('click', openPopupEditAvatar);
 
 // для каждой формы
 // -- создать экземпляр класса FormValidator c передаными в него validation config & формы
@@ -126,8 +152,44 @@ formList.forEach((formElement) => {
 const popupEditProfile = new PopupWithForm('.popup_edit', handleEditProfileSubmit);
 const popupAddCard = new PopupWithForm('.popup_add', handleAddPlaceSubmit);
 const popupShowCard = new PopupWithImage('.popup-pic');
+const popupEditAvatar = new PopupWithForm('.popup_edit-avatar', handleEditAvatarSubmit);
+const popupWithConfirm = new PopupWithConfirm('.popup-card-del');
 
 //устанавливаем слушатели
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupShowCard.setEventListeners();
+popupEditAvatar.setEventListeners();
+popupWithConfirm.setEventListeners();
+
+//добовоение счетчика лайков (стили )
+
+// const likeCounter = document.querySelector('.place__likes-counter');
+// likeCounter.style.display = 'block';
+
+// const likeBtn = document.querySelector('.place__like-btn');
+// likeBtn.style = 'grid-row: 1/2';
+
+// updateCardHandler() {
+//   const cardPayload = {
+//     name : '123',
+//     link: '123',
+//   }
+
+const userProfileInfo = new UserInfo(userNameSelector, userOccupationSelector, userAvatarSelector);
+
+//Получаем карточки с сервера
+const cardsSection = new Section(
+  {
+    renderer: renderAndAddPlace,
+  },
+  placesContainerSelector
+);
+
+api.getUserInfo().then((userInfo) => {
+  userProfileInfo.setUserInfo(userInfo);
+
+  api.getInitialCards().then((items) => {
+    cardsSection.renderAllItems(items);
+  });
+});

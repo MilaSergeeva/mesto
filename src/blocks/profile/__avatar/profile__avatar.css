@@ -1,6 +1,7 @@
 .profile__avatar {
-  display: inline-block;
+  display: block;
   height: 120px;
   width: 120px;
   border-radius: 90px;
+  vertical-align: center;
 }

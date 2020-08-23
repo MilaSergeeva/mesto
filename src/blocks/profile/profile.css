@@ -1,7 +1,11 @@
 @import url(./__avatar/profile__avatar.css);
 @import url(./__add-button/profile__add-button.css);
+@import url(./__avatar-cover/profile__avatar-cover.css);
+@import url(./__avatar-container/profile__avatar-container.css);
+
 .profile {
-  padding: 36px 0 25px 0;
+  margin: 40px 0 51px 0;
+  /* padding: 36px 0 25px 0; */
   display: flex;
   align-items: center;
   justify-content: space-between;
