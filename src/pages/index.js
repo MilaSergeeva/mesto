@@ -63,7 +63,7 @@ function handleCardClick(link, name) {
 
 function renderPlace(place) {
   const userInfo = userProfileInfo.getUserInfo();
-  const card = new Card(place, userInfo, placesTemplateElement, popupWithConfirm, handleCardClick);
+  const card = new Card(place, userInfo, placesTemplateElement, popupWithConfirm, handlers);
 
   return card.render();
 }
@@ -129,6 +129,50 @@ const handleEditAvatarSubmit = (formData) => {
       console.log(err); // выведем ошибку в консоль
     });
   popupEditAvatar.closePopup();
+};
+
+const clickLikeHandler = (event, place, likesCounter) => {
+  if (event.target.classList.contains('place__like-btn_on')) {
+    api
+      .deleteLikeCard(place._id)
+      .then((cardInfo) => {
+        event.target.classList.toggle('place__like-btn_on');
+
+        likesCounter.textContent = cardInfo.likes.length;
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  } else {
+    api
+      .likeCard(place._id)
+      .then((cardInfo) => {
+        event.target.classList.toggle('place__like-btn_on');
+
+        likesCounter.textContent = cardInfo.likes.length;
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }
+};
+
+const clickDeleteHandler = (event, placeObject) => {
+  popupWithConfirm.setOnPopupConfirm(() => {
+    api.deleteCard(placeObject._id).then(() => {
+      const place = event.target.closest('.place');
+
+      place.remove();
+    });
+  });
+
+  popupWithConfirm.openPopup();
+};
+
+const handlers = {
+  handleCardClick: handleCardClick,
+  cardLikeHandler: clickLikeHandler,
+  cardDeleteHandler: clickDeleteHandler,
 };
 
 // bind toggle to popups

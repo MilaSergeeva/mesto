@@ -1,12 +1,11 @@
-import { api } from '../utils/api/index.js';
-
 class Card {
-  constructor(place, currentUserInfo, placesTemplateElement, popupWithConfirm, handleCardClick) {
+  constructor(place, currentUserInfo, placesTemplateElement, popupWithConfirm, handlers) {
     this.place = place;
     this.currentUserInfo = currentUserInfo;
     this.placesTemplateElement = placesTemplateElement;
-    this._handleCardClick = handleCardClick;
-    this.api = api;
+    this._handleCardClick = handlers.handleCardClick;
+    this._handleLikeButton = handlers.cardLikeHandler;
+    this._confirmDeleteCard = handlers.cardDeleteHandler;
     this.popupWithConfirm = popupWithConfirm;
   }
 
@@ -21,48 +20,6 @@ class Card {
   }
 
   _setEventListeners() {
-    // кнопка лайк
-    this._handleLikeButton = (event) => {
-      if (event.target.classList.contains('place__like-btn_on')) {
-        this.api
-          .deleteLikeCard(this.place._id)
-          .then((cardInfo) => {
-            event.target.classList.toggle('place__like-btn_on');
-
-            this.likesCounter.textContent = cardInfo.likes.length;
-          })
-          .catch((err) => {
-            console.log(err); // выведем ошибку в консоль
-          });
-      } else {
-        this.api
-          .likeCard(this.place._id)
-          .then((cardInfo) => {
-            event.target.classList.toggle('place__like-btn_on');
-
-            this.likesCounter.textContent = cardInfo.likes.length;
-          })
-          .catch((err) => {
-            console.log(err); // выведем ошибку в консоль
-          });
-      }
-    };
-
-    //удаление карточки
-    this._confirmDeleteCard = (event) => {
-      this.popupWithConfirm.setOnPopupConfirm(() => {
-        this.api.deleteCard(this.place._id).then(() => {
-          const place = event.target.closest('.place');
-
-          this._removeEventListeners();
-
-          place.remove();
-        });
-      });
-
-      this.popupWithConfirm.openPopup();
-    };
-
     //функция открытия popup с просмотром картинки
     this._openPopupPlacePic = (event) => {
       const link = event.target.src;
@@ -72,8 +29,12 @@ class Card {
     };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);
-    this.deleteElement.addEventListener('click', this._confirmDeleteCard);
-    this.likeElement.addEventListener('click', this._handleLikeButton);
+    this.deleteElement.addEventListener('click', (event) => {
+      this._confirmDeleteCard(event, this.place);
+    });
+    this.likeElement.addEventListener('click', (event) => {
+      this._handleLikeButton(event, this.place, this.likesCounter);
+    });
   }
 
   //рендер карточки места

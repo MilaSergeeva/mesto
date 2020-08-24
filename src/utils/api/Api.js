@@ -70,7 +70,7 @@ class Api {
   deleteLikeCard(cardId) {
     const endpoint = `cards/likes/${cardId}`;
     const httpMethod = 'DELETE';
-
+    console.log(cardId);
     return this.makeRequest(endpoint, httpMethod);
   }
   // другие методы работы с API
