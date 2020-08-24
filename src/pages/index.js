@@ -44,11 +44,16 @@ const handleEditProfileSubmit = function (formData) {
     about: formData['user-occupation'],
   };
 
-  api.updateUserInfo(userInfo).then((updatedUserInfo) => {
-    userProfileInfo.setUserInfo(updatedUserInfo);
+  api
+    .updateUserInfo(userInfo)
+    .then((updatedUserInfo) => {
+      userProfileInfo.setUserInfo(updatedUserInfo);
 
-    popupEditProfile.closePopup();
-  });
+      popupEditProfile.closePopup();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
 };
 
 //функция открытия popup с карточкой
@@ -95,14 +100,19 @@ const handleAddPlaceSubmit = (formData) => {
     link: formData['place-link'],
   };
 
-  api.postCard(placePayload).then((data) => {
-    const boundRendered = renderAndAddPlace.bind(cardsSection);
+  api
+    .postCard(placePayload)
+    .then((data) => {
+      const boundRendered = renderAndAddPlace.bind(cardsSection);
 
-    boundRendered(data);
+      boundRendered(data);
 
-    popupAddCard.closePopup();
-    placeNameInput.dispatchEvent(new Event('input'));
-  });
+      popupAddCard.closePopup();
+      placeNameInput.dispatchEvent(new Event('input'));
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
 };
 
 const handleEditAvatarSubmit = (formData) => {
@@ -110,9 +120,14 @@ const handleEditAvatarSubmit = (formData) => {
     avatar: formData['avatar-link'],
   };
 
-  api.updateAvatar(userInfo).then((updatedUserInfo) => {
-    userProfileInfo.setUserInfo(updatedUserInfo);
-  });
+  api
+    .updateAvatar(userInfo)
+    .then((updatedUserInfo) => {
+      userProfileInfo.setUserInfo(updatedUserInfo);
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
   popupEditAvatar.closePopup();
 };
 
@@ -163,10 +178,14 @@ const cardsSection = new Section(
 //   });
 // });
 
-Promise.all([api.getUserInfo(), api.getInitialCards()]).then((res) => {
-  const userInfo = res[0];
-  const items = res[1];
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then((res) => {
+    const userInfo = res[0];
+    const items = res[1];
 
-  userProfileInfo.setUserInfo(userInfo);
-  cardsSection.renderAllItems(items);
-});
+    userProfileInfo.setUserInfo(userInfo);
+    cardsSection.renderAllItems(items);
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });

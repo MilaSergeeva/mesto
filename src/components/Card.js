@@ -1,4 +1,4 @@
-import { api } from '../utils/api';
+import { api } from '../utils/api/index.js';
 
 class Card {
   constructor(place, currentUserInfo, placesTemplateElement, popupWithConfirm, handleCardClick) {
@@ -6,7 +6,7 @@ class Card {
     this.currentUserInfo = currentUserInfo;
     this.placesTemplateElement = placesTemplateElement;
     this._handleCardClick = handleCardClick;
-
+    this.api = api;
     this.popupWithConfirm = popupWithConfirm;
   }
 
@@ -24,17 +24,27 @@ class Card {
     // кнопка лайк
     this._handleLikeButton = (event) => {
       if (event.target.classList.contains('place__like-btn_on')) {
-        this.api.deleteLikeCard(this.place._id).then((cardInfo) => {
-          event.target.classList.toggle('place__like-btn_on');
+        this.api
+          .deleteLikeCard(this.place._id)
+          .then((cardInfo) => {
+            event.target.classList.toggle('place__like-btn_on');
 
-          this.likesCounter.textContent = cardInfo.likes.length;
-        });
+            this.likesCounter.textContent = cardInfo.likes.length;
+          })
+          .catch((err) => {
+            console.log(err); // выведем ошибку в консоль
+          });
       } else {
-        this.api.likeCard(this.place._id).then((cardInfo) => {
-          event.target.classList.toggle('place__like-btn_on');
+        this.api
+          .likeCard(this.place._id)
+          .then((cardInfo) => {
+            event.target.classList.toggle('place__like-btn_on');
 
-          this.likesCounter.textContent = cardInfo.likes.length;
-        });
+            this.likesCounter.textContent = cardInfo.likes.length;
+          })
+          .catch((err) => {
+            console.log(err); // выведем ошибку в консоль
+          });
       }
     };
 
