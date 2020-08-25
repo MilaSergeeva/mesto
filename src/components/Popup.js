@@ -1,3 +1,4 @@
+import { ESC_KEYCODE } from '../utils/constants.js';
 class Popup {
   constructor(popupSelector) {
     this._element = document.querySelector(popupSelector);
@@ -6,7 +7,7 @@ class Popup {
     this._popupOpenedClassName = 'popup_opened';
 
     this._handleEscClose = (event) => {
-      if (event.keyCode === 27) {
+      if (event.keyCode === ESC_KEYCODE) {
         const popupOpened = document.querySelector('.popup_opened');
 
         if (popupOpened) {

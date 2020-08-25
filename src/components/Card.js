@@ -22,15 +22,15 @@ class Card {
   _setEventListeners() {
     //функция открытия popup с просмотром картинки
     this._openPopupPlacePic = (event) => {
-      const link = event.target.src;
-      const name = event.target.alt;
+      const link = this.imageElement.src;
+      const name = this.imageElement.alt;
 
       this._handleCardClick(link, name);
     };
 
     this.imageElement.addEventListener('click', this._openPopupPlacePic);
-    this.deleteElement.addEventListener('click', (event) => {
-      this._confirmDeleteCard(event, this.place);
+    this.deleteElement.addEventListener('click', () => {
+      this._confirmDeleteCard(this.place, this.cardElement);
     });
     this.likeElement.addEventListener('click', (event) => {
       this._handleLikeButton(event, this.place, this.likesCounter);
@@ -46,6 +46,7 @@ class Card {
     this.likeElement = this.placeElement.querySelector('.place__like-btn');
     this.deleteElement = this.placeElement.querySelector('.place__bin-btn');
     this.titleElement = this.placeElement.querySelector('.place__title');
+    this.cardElement = this.placeElement.querySelector('.place');
 
     this.titleElement.textContent = this.place.name;
     this.likesCounter.textContent = this.place.likes.length;

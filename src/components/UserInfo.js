@@ -3,7 +3,6 @@ class UserInfo {
     this._userNameElement = document.querySelector(userNameSelrctor);
     this._userOccupationElement = document.querySelector(userOccupationSelector);
     this._userAvatarSelector = document.querySelector(userAvatarSelector);
-    this.userInfo;
   }
 
   getUserInfo() {
@@ -17,6 +16,7 @@ class UserInfo {
     this._userOccupationElement.textContent = this.userInfo.about;
 
     this._userAvatarSelector.src = this.userInfo.avatar;
+    this._userAvatarSelector.alt = this.userInfo.name;
   }
 }
 

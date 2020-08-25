@@ -124,6 +124,7 @@ const handleEditAvatarSubmit = (formData) => {
     .updateAvatar(userInfo)
     .then((updatedUserInfo) => {
       userProfileInfo.setUserInfo(updatedUserInfo);
+      console.log(updatedUserInfo);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -157,12 +158,10 @@ const clickLikeHandler = (event, place, likesCounter) => {
   }
 };
 
-const clickDeleteHandler = (event, placeObject) => {
+const clickDeleteHandler = (placeObject, cardElement) => {
   popupWithConfirm.setOnPopupConfirm(() => {
     api.deleteCard(placeObject._id).then(() => {
-      const place = event.target.closest('.place');
-
-      place.remove();
+      cardElement.remove();
     });
   });
 
@@ -224,8 +223,7 @@ const cardsSection = new Section(
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((res) => {
-    const userInfo = res[0];
-    const items = res[1];
+    const [userInfo, items] = res;
 
     userProfileInfo.setUserInfo(userInfo);
     cardsSection.renderAllItems(items);

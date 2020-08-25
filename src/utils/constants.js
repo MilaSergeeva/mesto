@@ -37,6 +37,8 @@ const validationConfig = {
   errorClass: 'popup__error_visible',
 };
 
+const ESC_KEYCODE = 27;
+
 export {
   popupEditOpenBtn,
   popupAddOpenBtn,
@@ -58,4 +60,5 @@ export {
   formSelector,
   formInputSelector,
   validationConfig,
+  ESC_KEYCODE,
 };
