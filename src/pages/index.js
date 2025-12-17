@@ -71,6 +71,7 @@ function renderPlace(place) {
 //рендер и добавоение карточки
 function renderAndAddPlace(place) {
   if (isBlockedUrl(place.link)) return; //  не показываем
+  if (!isAllowedCardLink(place.link)) return;
 
   const renderedPlace = renderPlace(place);
   this.addItem(renderedPlace);
@@ -96,24 +97,72 @@ const openPopupEditAvatar = function (_event) {
 };
 
 //добавление новой карточки на страницу
-const handleAddPlaceSubmit = (formData) => {
+// const handleAddPlaceSubmit = (formData) => {
+//   const placePayload = {
+//     name: formData['place-name'],
+//     link: formData['place-link'],
+//   };
+
+//   api
+//     .postCard(placePayload)
+//     .then((data) => {
+//       const boundRendered = renderAndAddPlace.bind(cardsSection);
+
+//       boundRendered(data);
+
+//       popupAddCard.closePopup();
+//       placeNameInput.dispatchEvent(new Event('input'));
+//     })
+//     .catch((err) => {
+//       console.log(err); // выведем ошибку в консоль
+//     });
+// };
+
+const handleAddPlaceSubmit = async (formData) => {
   const placePayload = {
     name: formData['place-name'],
     link: formData['place-link'],
   };
 
+  const link = String(placePayload.link || '').trim();
+
+  // 1) "porn" — блокируем
+  if (isBlockedUrl(link)) {
+    placeLinkInput.setCustomValidity('Ссылка запрещена (содержит "porn").');
+    placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
+  }
+
+  // 2) должен быть нормальный http(s) url
+  if (!isHttpUrl(link)) {
+    placeLinkInput.setCustomValidity('Введите корректную ссылку (http/https).');
+    placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
+  }
+
+  // 3) реально ли грузится как картинка
+  const ok = await canLoadAsImage(link);
+  if (!ok) {
+    placeLinkInput.setCustomValidity('По этой ссылке не удалось загрузить изображение.');
+    placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
+  }
+
+  // если всё ок — снимаем кастомную ошибку
+  placeLinkInput.setCustomValidity('');
+  placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
+
   api
     .postCard(placePayload)
     .then((data) => {
       const boundRendered = renderAndAddPlace.bind(cardsSection);
-
       boundRendered(data);
 
       popupAddCard.closePopup();
       placeNameInput.dispatchEvent(new Event('input'));
     })
     .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
+      console.log(err);
     });
 };
 
@@ -177,6 +226,41 @@ const isBlockedUrl = (url = '') => {
     return String(url).toLowerCase().includes('porn');
   }
 };
+
+const isHttpUrl = (url) => {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'http:' || u.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+const isAllowedCardLink = (link) => {
+  const v = String(link || '').trim();
+  return v && isHttpUrl(v) && !isBlockedUrl(v);
+};
+
+const canLoadAsImage = (url, timeoutMs = 7000) =>
+  new Promise((resolve) => {
+    const img = new Image();
+    const timer = setTimeout(() => {
+      img.src = '';
+      resolve(false);
+    }, timeoutMs);
+
+    img.onload = () => {
+      clearTimeout(timer);
+      resolve(true);
+    };
+    img.onerror = () => {
+      clearTimeout(timer);
+      resolve(false);
+    };
+
+    img.referrerPolicy = 'no-referrer';
+    img.src = url;
+  });
 
 const handlers = {
   handleCardClick: handleCardClick,
