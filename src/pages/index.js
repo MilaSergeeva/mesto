@@ -70,7 +70,6 @@ function renderPlace(place) {
 
 //рендер и добавоение карточки
 function renderAndAddPlace(place) {
-  console.log('животное чочо попячся, азазаза хйухйухйу');
   if (isBlockedUrl(place.link)) return; //  не показываем
   if (!isAllowedCardLink(place.link)) return;
 
