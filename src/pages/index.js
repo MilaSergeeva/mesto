@@ -26,6 +26,8 @@ import {
   validationConfig,
 } from '../utils/constants.js';
 
+import 'regenerator-runtime/runtime';
+
 const openPopupEditProfile = () => {
   const userData = userProfileInfo.getUserInfo();
 

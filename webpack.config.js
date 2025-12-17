@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fs = require('fs');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -42,10 +43,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      templateContent: fs.readFileSync(path.resolve(__dirname, './src/index.html'), 'utf-8'),
-    }),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
     new MiniCssExtractPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        // выбери ТОТ путь, где реально лежит папка images:
+        { from: path.resolve(__dirname, 'src/images'), to: 'images' },
+        // если images лежит в корне проекта, то так:
+        // { from: path.resolve(__dirname, 'images'), to: 'images' },
+      ],
+    }),
   ],
 };

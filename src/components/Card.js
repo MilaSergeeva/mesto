@@ -128,13 +128,13 @@ class Card {
     };
     probe.onerror = () => {
       this._removeEventListeners();
-      this.cardElement.remove(); // ✅ удаляем реальный DOM-элемент карточки
+      this.cardElement.remove(); // удаляем реальный DOM-элемент карточки
     };
     probe.src = link;
 
     this._setEventListeners();
 
-    return this.cardElement; // ✅ возвращаем реальную карточку
+    return this.cardElement; // возвращаем реальную карточку
   }
 }
 
