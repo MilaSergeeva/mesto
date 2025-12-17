@@ -126,21 +126,21 @@ const handleAddPlaceSubmit = async (formData) => {
 
   const link = String(placePayload.link || '').trim();
 
-  // 1) "porn" — блокируем
+  //  "porn" — блокируем
   if (isBlockedUrl(link)) {
     placeLinkInput.setCustomValidity('Ссылка запрещена (содержит "porn").');
     placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
     return;
   }
 
-  // 2) должен быть нормальный http(s) url
+  // должен быть нормальный http(s) url
   if (!isHttpUrl(link)) {
     placeLinkInput.setCustomValidity('Введите корректную ссылку (http/https).');
     placeLinkInput.dispatchEvent(new Event('input', { bubbles: true }));
     return;
   }
 
-  // 3) реально ли грузится как картинка
+  //  реально ли грузится как картинка
   const ok = await canLoadAsImage(link);
   if (!ok) {
     placeLinkInput.setCustomValidity('По этой ссылке не удалось загрузить изображение.');

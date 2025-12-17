@@ -64,7 +64,27 @@ class Card {
       this.deleteElement.remove();
     }
 
-    this.imageElement.src = this.place.link;
+    // this.imageElement.src = this.place.link;
+
+    const link = String(this.place.link || '').trim();
+
+    if (isBlockedUrl(link)) {
+      this._setEventListeners(); // не надо
+      return null;
+    }
+
+    const probe = new Image();
+    probe.onload = () => {
+      this.imageElement.src = link;
+    };
+    probe.onerror = () => {
+      this._removeEventListeners();
+      this.placeElement.remove();
+    };
+
+    probe.referrerPolicy = 'no-referrer';
+    probe.src = link;
+
     this.imageElement.alt = this.place.name;
 
     this._setEventListeners();
