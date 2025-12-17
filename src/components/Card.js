@@ -41,54 +41,100 @@ class Card {
   render() {
     this.placeElement = this._getTemplate();
 
-    this.likesCounter = this.placeElement.querySelector('.place__likes-counter');
-    this.imageElement = this.placeElement.querySelector('.place__img');
-    this.likeElement = this.placeElement.querySelector('.place__like-btn');
-    this.deleteElement = this.placeElement.querySelector('.place__bin-btn');
-    this.titleElement = this.placeElement.querySelector('.place__title');
     this.cardElement = this.placeElement.querySelector('.place');
+
+    this.likesCounter = this.cardElement.querySelector('.place__likes-counter');
+    this.imageElement = this.cardElement.querySelector('.place__img');
+    this.likeElement = this.cardElement.querySelector('.place__like-btn');
+    this.deleteElement = this.cardElement.querySelector('.place__bin-btn');
+    this.titleElement = this.cardElement.querySelector('.place__title');
 
     this.titleElement.textContent = this.place.name;
     this.likesCounter.textContent = this.place.likes.length;
-    //если в списке  лаков  есть лайк пользователя
 
-    if (
-      this.place.likes.find((element) => {
-        return element._id === this.currentUserInfo._id;
-      })
-    ) {
+    // лайк текущего пользователя
+    if (this.place.likes.find((el) => el._id === this.currentUserInfo._id)) {
       this.likeElement.classList.add('place__like-btn_on');
     }
 
-    if (this.place.owner._id != this.currentUserInfo._id) {
+    // скрываем корзину, если не владелец
+    if (this.place.owner._id !== this.currentUserInfo._id) {
       this.deleteElement.remove();
     }
 
-    // this.imageElement.src = this.place.link;
-
     const link = String(this.place.link || '').trim();
 
-    if (isBlockedUrl(link)) {
-      this._setEventListeners(); // не надо
-      return null;
+    // бан по слову
+    if (typeof isBlockedUrl === 'function' && isBlockedUrl(link)) {
+      this.cardElement.remove();
+      return this.cardElement; // вернём элемент, но он уже удалён — addItem ничего не покажет
     }
 
+    this.imageElement.alt = this.place.name;
+
+    // Ставим src только если это реально изображение
     const probe = new Image();
     probe.onload = () => {
       this.imageElement.src = link;
     };
     probe.onerror = () => {
       this._removeEventListeners();
-      this.placeElement.remove();
+      this.cardElement.remove(); // ✅ удаляем реальный DOM-элемент карточки
     };
-
     probe.src = link;
-
-    this.imageElement.alt = this.place.name;
 
     this._setEventListeners();
 
-    return this.placeElement;
+    return this.cardElement; // ✅ возвращаем реальную карточку
+  }
+  render() {
+    this.placeElement = this._getTemplate();
+
+    this.cardElement = this.placeElement.querySelector('.place');
+
+    this.likesCounter = this.cardElement.querySelector('.place__likes-counter');
+    this.imageElement = this.cardElement.querySelector('.place__img');
+    this.likeElement = this.cardElement.querySelector('.place__like-btn');
+    this.deleteElement = this.cardElement.querySelector('.place__bin-btn');
+    this.titleElement = this.cardElement.querySelector('.place__title');
+
+    this.titleElement.textContent = this.place.name;
+    this.likesCounter.textContent = this.place.likes.length;
+
+    // лайк текущего пользователя
+    if (this.place.likes.find((el) => el._id === this.currentUserInfo._id)) {
+      this.likeElement.classList.add('place__like-btn_on');
+    }
+
+    // скрываем корзину, если не владелец
+    if (this.place.owner._id !== this.currentUserInfo._id) {
+      this.deleteElement.remove();
+    }
+
+    const link = String(this.place.link || '').trim();
+
+    // бан по слову
+    if (typeof isBlockedUrl === 'function' && isBlockedUrl(link)) {
+      this.cardElement.remove();
+      return this.cardElement; // вернём элемент, но он уже удалён — addItem ничего не покажет
+    }
+
+    this.imageElement.alt = this.place.name;
+
+    // Ставим src только если это реально изображение
+    const probe = new Image();
+    probe.onload = () => {
+      this.imageElement.src = link;
+    };
+    probe.onerror = () => {
+      this._removeEventListeners();
+      this.cardElement.remove(); // ✅ удаляем реальный DOM-элемент карточки
+    };
+    probe.src = link;
+
+    this._setEventListeners();
+
+    return this.cardElement; // ✅ возвращаем реальную карточку
   }
 }
 
