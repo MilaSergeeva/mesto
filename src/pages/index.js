@@ -70,6 +70,8 @@ function renderPlace(place) {
 
 //рендер и добавоение карточки
 function renderAndAddPlace(place) {
+  if (isBlockedUrl(place.link)) return; //  не показываем
+
   const renderedPlace = renderPlace(place);
   this.addItem(renderedPlace);
 }
@@ -166,6 +168,14 @@ const clickDeleteHandler = (placeObject, cardElement) => {
   });
 
   popupWithConfirm.openPopup();
+};
+
+const isBlockedUrl = (url = '') => {
+  try {
+    return decodeURIComponent(String(url)).toLowerCase().includes('porn');
+  } catch {
+    return String(url).toLowerCase().includes('porn');
+  }
 };
 
 const handlers = {

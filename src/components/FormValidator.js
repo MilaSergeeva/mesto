@@ -24,6 +24,15 @@ class FormValidator {
 
   //проверка валидности инпутов
   _checkInputValidity(inputElement) {
+    if (inputElement.name === 'place-link') {
+      const value = (inputElement.value || '').toLowerCase();
+      if (value.includes('porn')) {
+        inputElement.setCustomValidity('Эта ссылка запрещена (содержит "porn").');
+      } else {
+        inputElement.setCustomValidity('');
+      }
+    }
+
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
     } else {
