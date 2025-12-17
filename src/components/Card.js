@@ -82,7 +82,6 @@ class Card {
       this.placeElement.remove();
     };
 
-    probe.referrerPolicy = 'no-referrer';
     probe.src = link;
 
     this.imageElement.alt = this.place.name;
