@@ -43,15 +43,13 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({
+      // читаем index.html как строку и даём её плагину напрямую
+      templateContent: fs.readFileSync(path.resolve(__dirname, 'src/index.html'), 'utf-8'),
+    }),
     new MiniCssExtractPlugin(),
     new CopyWebpackPlugin({
-      patterns: [
-        // выбери ТОТ путь, где реально лежит папка images:
-        { from: path.resolve(__dirname, 'src/images'), to: 'images' },
-        // если images лежит в корне проекта, то так:
-        // { from: path.resolve(__dirname, 'images'), to: 'images' },
-      ],
+      patterns: [{ from: path.resolve(__dirname, 'src/images'), to: 'images' }],
     }),
   ],
 };
